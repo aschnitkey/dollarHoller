@@ -4,6 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-	padding: 1em;
+@layer base {
+	body {
+		@apply font-sansSerif;
+	}
+}
+
+@layer components {
+}
+
+@layer utilities {
 }
