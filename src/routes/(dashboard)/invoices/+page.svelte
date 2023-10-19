@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Search from '$lib/components/icon/Search.svelte';
+	import Search from '$lib/components/Search.svelte';
 	import Dots from '$lib/components/icon/Dots.svelte';
 	import View from '$lib/components/icon/View.svelte';
 </script>
@@ -8,33 +8,25 @@
 	<title>Invoices | The Dollar Holler</title>
 </svelte:head>
 
-<div>
+<div class="flex items-center justify-between mb-16">
 	<!-- Search field -->
-	<div class="relative flex items-baseline w-full">
-		<div class="mt-auto mr-2 text-pastelPurple">
-			<Search />
-		</div>
-		<input
-			type="text"
-			name="search"
-			placeholder="Search by keyword"
-			class="text-xl text-black bg-transparent border-b-2 border-dashed outline-none w-72 border-b-pastelPurple font-sansSerif focus:border-b-lavenderIndigo focus:border-solid"
-		/>
-		<button class="text-xl font-black font-sansSerif text-pastelPurple">Search</button>
-	</div>
+	<Search />
 
 	<!-- New Invoice Button -->
 	<div>
-		<button>+ Invoice</button>
+		<button
+			class="relative px-10 py-3 text-xl font-black text-white transition translate-y-0 rounded-lg whitespace-nowrap bg-lavenderIndigo font-sansSerif shadow-colored hover:shadow-coloredHover hover:-translate-y-2"
+			>+ Invoice</button
+		>
 	</div>
 </div>
 
 <!-- list of invoices -->
 <div>
 	<!-- header -->
-	<div>
+	<div class="grid gap-4 px-6 mb-3 text-daisyBush grid-cols-invoiceTable table-header">
 		<h3>Status</h3>
-		<h3>Issue Date</h3>
+		<h3>Due Date</h3>
 		<h3>ID</h3>
 		<h3>Client</h3>
 		<h3>Amount</h3>
@@ -56,3 +48,9 @@
 
 <!-- summary row -->
 <div>Total: $1044.34</div>
+
+<style lang="postcss">
+	.table-header {
+		@apply text-xl font-black leading-snug;
+	}
+</style>

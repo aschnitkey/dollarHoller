@@ -8,6 +8,10 @@ export default {
 			handwriting: ['Kalam', 'cursive']
 		},
 		extend: {
+			boxShadow: {
+				colored: '0px 7px 16px 0px rgba(127, 91, 220, 0.002)',
+				coloredHover: '0px 16px 25px rgba(127, 91, 220, 0.30)'
+			},
 			colors: {
 				lavenderIndigo: '#8657e1',
 				daisyBush: '#4714a5',
@@ -24,6 +28,9 @@ export default {
 				gallery: '#efeaf2',
 				caribbeanGreen: '#00ca9e',
 				fog: '#decaec'
+			},
+			gridTemplateColumns: {
+				invoiceTable: '100px 100px 60px 1fr 116px 32px 32px'
 			}
 		}
 	},
