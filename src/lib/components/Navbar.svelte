@@ -32,8 +32,9 @@
 </button>
 
 <header
-	class="fixed w-full h-screen text-center transition duration-500 ease-in-out -translate-x-full md:h-full md:relative md:col-span-3 md:-translate-x-0 bg-daisyBush"
+	class="fixed z-40 w-full h-screen text-center transition duration-500 ease-in-out md:h-full md:relative md:col-span-3 md:-translate-x-0 bg-daisyBush"
 	class:-translate-x-0={isNavShowing}
+	class:-translate-x-full={!isNavShowing}
 >
 	<div class="my-10 md:mb-24">
 		<a href="/invoices"><img src="/images/logo.svg" alt="The Dollar Holler" class="mx-auto" /></a>

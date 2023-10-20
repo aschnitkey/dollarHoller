@@ -10,7 +10,7 @@
 		type="text"
 		name="search"
 		placeholder="Search by keyword"
-		class="text-xl text-black bg-transparent border-b-2 border-dashed outline-none w-72 border-b-pastelPurple font-sansSerif focus:border-b-lavenderIndigo focus:border-solid"
+		class="w-full text-base lg:text-xl text-black bg-transparent border-b-2 border-dashed outline-none md:w-[14rem] lg:w-72 border-b-pastelPurple font-sansSerif focus:border-b-lavenderIndigo focus:border-solid"
 	/>
-	<button class="text-xl font-black font-sansSerif text-pastelPurple">Search</button>
+	<button class="text-base font-black lg:text-xl font-sansSerif text-pastelPurple">Search</button>
 </div>
