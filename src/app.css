@@ -15,7 +15,13 @@
 }
 
 @layer components {
+	.invoice-table {
+		@apply grid gap-4 px-6 mb-3 w-full grid-cols-invoiceTable;
+	}
 }
 
 @layer utilities {
+	.center {
+		@apply flex items-center justify-center;
+	}
 }

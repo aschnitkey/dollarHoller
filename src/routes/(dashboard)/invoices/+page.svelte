@@ -1,5 +1,7 @@
 <script lang="ts">
+	import CircledAmount from '$lib/components/CircledAmount.svelte';
 	import Search from '$lib/components/Search.svelte';
+	import Tag from '$lib/components/Tag.svelte';
 	import Dots from '$lib/components/icon/Dots.svelte';
 	import View from '$lib/components/icon/View.svelte';
 </script>
@@ -24,7 +26,7 @@
 <!-- list of invoices -->
 <div>
 	<!-- header -->
-	<div class="grid gap-4 px-6 mb-3 text-daisyBush grid-cols-invoiceTable table-header">
+	<div class=" text-daisyBush invoice-table table-header">
 		<h3>Status</h3>
 		<h3>Due Date</h3>
 		<h3>ID</h3>
@@ -35,19 +37,27 @@
 	</div>
 
 	<!-- invoice rows -->
-	<div>
-		<div>Tag</div>
-		<div>10/19/2023</div>
-		<div>12345</div>
-		<div>Andrew Schnitkey</div>
-		<div>$123.34</div>
-		<div>View</div>
-		<div>More</div>
+	<div class="items-center py-6 bg-white rounded-lg invoice-table shadow-tableRow">
+		<div><Tag label={'draft'} /></div>
+		<div class="text-lg">10/19/2023</div>
+		<div class="text-lg">12345</div>
+		<div class="text-xl font-bold">Andrew Schnitkey</div>
+		<div class="font-mono text-lg font-bold">$123.34</div>
+		<div class="text-lg center">
+			<a href="#" class=" text-pastelPurple hover:text-daisyBush">
+				<View />
+			</a>
+		</div>
+		<div class="text-lg center">
+			<button class=" text-pastelPurple hover:text-daisyBush">
+				<Dots />
+			</button>
+		</div>
 	</div>
 </div>
 
 <!-- summary row -->
-<div>Total: $1044.34</div>
+<CircledAmount label={'Total'} amount={'$1044.12'} />
 
 <style lang="postcss">
 	.table-header {

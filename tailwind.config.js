@@ -8,9 +8,13 @@ export default {
 			handwriting: ['Kalam', 'cursive']
 		},
 		extend: {
+			backgroundImage: {
+				circle: "url('/images/circle.svg')"
+			},
 			boxShadow: {
 				colored: '0px 7px 16px 0px rgba(127, 91, 220, 0.002)',
-				coloredHover: '0px 16px 25px rgba(127, 91, 220, 0.30)'
+				coloredHover: '0px 16px 25px rgba(127, 91, 220, 0.30)',
+				tableRow: '0px 0px 6px 0px rgba(0, 0, 0, 0.16)'
 			},
 			colors: {
 				lavenderIndigo: '#8657e1',
