@@ -1,9 +1,14 @@
 <script lang="ts">
+	import { invoices, loadInvoices } from '$lib/stores/InvoiceStore';
+	import { onMount } from 'svelte';
 	import CircledAmount from '$lib/components/CircledAmount.svelte';
 	import Search from '$lib/components/Search.svelte';
-	import Tag from '$lib/components/Tag.svelte';
-	import Dots from '$lib/components/icon/Dots.svelte';
-	import View from '$lib/components/icon/View.svelte';
+	import InvoiceRow from './InvoiceRow.svelte';
+
+	onMount(() => {
+		loadInvoices();
+		console.log($invoices);
+	});
 </script>
 
 <svelte:head>
@@ -37,27 +42,9 @@
 		<div />
 		<div />
 	</div>
-
-	<!-- invoice rows -->
-	<div
-		class="items-center py-3 bg-white rounded-lg lg:py-6 invoice-table invoice-row shadow-tableRow"
-	>
-		<div class="status"><Tag className={'ml-auto lg:ml-0'} label={'draft'} /></div>
-		<div class="text-sm lg:text-lg duedate">10/19/2023</div>
-		<div class="text-sm lg:text-lg invoicenumber">12345</div>
-		<div class="font-bold text- base lg:text-xl clientname">Andrew Schnitkey</div>
-		<div class="font-mono text-sm font-bold text-right lg:text-lg amount">$123.34</div>
-		<div class="hidden text-sm lg:text-lg viewbutton lg:center lg:block">
-			<a href="#" class=" text-pastelPurple hover:text-daisyBush">
-				<View />
-			</a>
-		</div>
-		<div class="hidden text-sm lg:text-lg morebutton lg:center lg:block">
-			<button class=" text-pastelPurple hover:text-daisyBush">
-				<Dots />
-			</button>
-		</div>
-	</div>
+	{#each $invoices as invoice}
+		<InvoiceRow {invoice} />
+	{/each}
 </div>
 
 <!-- summary row -->
@@ -66,46 +53,5 @@
 <style lang="postcss">
 	.table-header {
 		@apply text-xl font-black leading-snug;
-	}
-
-	.invoice-row {
-		grid-template-areas:
-			'invoiceNumber invoiceNumber'
-			'clientName amount'
-			'dueDate status';
-	}
-
-	@media (min-width: 1024px) {
-		.invoice-row {
-			grid-template-areas: 'status dueDate invoiceNumber clientName amount viewButton moreButton';
-		}
-	}
-
-	.invoice-row .status {
-		grid-area: status;
-	}
-
-	.invoice-row .duedate {
-		grid-area: dueDate;
-	}
-
-	.invoice-row .invoicenumber {
-		grid-area: invoiceNumber;
-	}
-
-	.invoice-row .clientname {
-		grid-area: clientName;
-	}
-
-	.invoice-row .amount {
-		grid-area: amount;
-	}
-
-	.invoice-row .viewbutton {
-		grid-area: viewButton;
-	}
-
-	.invoice-row .morebutton {
-		grid-area: moreButton;
 	}
 </style>
