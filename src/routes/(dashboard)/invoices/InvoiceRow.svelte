@@ -3,6 +3,8 @@
 	import Dots from '$lib/components/icon/Dots.svelte';
 	import View from '$lib/components/icon/View.svelte';
 
+	import { numToCurrency, sumLineItems } from '$lib/utils/moneyHelpers';
+
 	export let invoice: Invoice;
 </script>
 
@@ -11,10 +13,16 @@
 	class="items-center py-3 bg-white rounded-lg lg:py-6 invoice-table invoice-row shadow-tableRow"
 >
 	<div class="status"><Tag className={'ml-auto lg:ml-0'} label={invoice.invoiceStatus} /></div>
-	<div class="text-sm lg:text-lg duedate">{invoice.dueDate}</div>
-	<div class="text-sm lg:text-lg invoicenumber">{invoice.invoiceNumber}</div>
-	<div class="font-bold text- base lg:text-xl clientname">{invoice.client.name}</div>
-	<div class="font-mono text-sm font-bold text-right lg:text-lg amount">0</div>
+	<div class="text-sm lg:text-base duedate">{invoice.dueDate}</div>
+	<div class="text-sm lg:text-base invoicenumber">{invoice.invoiceNumber}</div>
+	<div class="font-bold truncate text- base lg:text-xl clientname whitespace-nowrap">
+		{invoice.client.name}
+	</div>
+	<div
+		class="font-mono text-sm font-bold text-right truncate lg:text-base whitespace-nowrap amount"
+	>
+		{numToCurrency(sumLineItems(invoice.lineItems))}
+	</div>
 	<div class="hidden text-sm lg:text-lg viewbutton lg:center lg:block">
 		<a href="#" class=" text-pastelPurple hover:text-daisyBush">
 			<View />
