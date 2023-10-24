@@ -1,7 +1,8 @@
 export enum InvoiceStatus {
 	draft = 'draft',
 	sent = 'sent',
-	paid = 'paid'
+	paid = 'paid',
+	late = 'late'
 }
 
 export enum ClitenStatus {

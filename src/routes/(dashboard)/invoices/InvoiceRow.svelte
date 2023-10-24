@@ -2,6 +2,7 @@
 	import Tag from '$lib/components/Tag.svelte';
 	import Dots from '$lib/components/icon/Dots.svelte';
 	import View from '$lib/components/icon/View.svelte';
+	import { convertDateFormat, isLate } from '$lib/utils/dateHelpers';
 
 	import { numToCurrency, sumLineItems } from '$lib/utils/moneyHelpers';
 
@@ -12,8 +13,13 @@
 <div
 	class="items-center py-3 bg-white rounded-lg lg:py-6 invoice-table invoice-row shadow-tableRow"
 >
-	<div class="status"><Tag className={'ml-auto lg:ml-0'} label={invoice.invoiceStatus} /></div>
-	<div class="text-sm lg:text-base duedate">{invoice.dueDate}</div>
+	<div class="status">
+		<Tag
+			className={'ml-auto lg:ml-0'}
+			label={isLate(invoice.dueDate) ? 'late' : invoice.invoiceStatus}
+		/>
+	</div>
+	<div class="text-sm lg:text-base duedate">{convertDateFormat(invoice.dueDate)}</div>
 	<div class="text-sm lg:text-base invoicenumber">{invoice.invoiceNumber}</div>
 	<div class="font-bold truncate text- base lg:text-xl clientname whitespace-nowrap">
 		{invoice.client.name}
