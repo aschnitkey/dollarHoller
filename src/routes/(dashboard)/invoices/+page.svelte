@@ -42,9 +42,11 @@
 		<div />
 		<div />
 	</div>
-	{#each $invoices as invoice}
-		<InvoiceRow {invoice} />
-	{/each}
+	<div class="flex flex-col">
+		{#each $invoices as invoice}
+			<InvoiceRow {invoice} />
+		{/each}
+	</div>
 </div>
 
 <!-- summary row -->

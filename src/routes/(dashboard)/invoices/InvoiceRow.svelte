@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AdditionalOptions from '$lib/components/AdditionalOptions.svelte';
 	import Tag from '$lib/components/Tag.svelte';
 	import Dots from '$lib/components/icon/Dots.svelte';
 	import View from '$lib/components/icon/View.svelte';
@@ -37,10 +38,11 @@
 			<View />
 		</a>
 	</div>
-	<div class="hidden text-sm lg:text-lg morebutton lg:center lg:block">
+	<div class="relative hidden text-sm lg:text-lg morebutton lg:center lg:block">
 		<button class=" text-pastelPurple hover:text-daisyBush">
 			<Dots />
 		</button>
+		<AdditionalOptions />
 	</div>
 </div>
 
