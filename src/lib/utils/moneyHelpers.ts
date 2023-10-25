@@ -1,3 +1,8 @@
+/**
+ * Accepts a collection of line items from invoices and returns the sum of all the line item amounts
+ * @param {LineItems[] | undefined} lineItems
+ * @returns {number}
+ */
 export const sumLineItems = (lineItems: LineItems[] | undefined): number => {
 	const sum = 0;
 	if (!lineItems) return 0;
@@ -6,6 +11,24 @@ export const sumLineItems = (lineItems: LineItems[] | undefined): number => {
 	}, 0);
 };
 
+/**
+ * Takes in a number and converts it to US currency which is returned as a string
+ * @param {number} num
+ * @returns {string}
+ */
 export const numToCurrency = (num: number): string => {
 	return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
+};
+
+/**
+ * Takes in a collection of invoices and returns the total amount of all of the invoices
+ * @param {Invoice[] | undefined} invoices
+ * @returns {number}
+ */
+export const totalAmount = (invoices: Invoice[] | undefined): number => {
+	if (!invoices) return 0;
+	return invoices.reduce((prev, curr) => {
+		const invoiceSum = sumLineItems(curr.lineItems);
+		return prev + invoiceSum;
+	}, 0);
 };

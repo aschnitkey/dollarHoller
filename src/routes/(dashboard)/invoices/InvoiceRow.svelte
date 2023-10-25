@@ -7,6 +7,12 @@
 	import { numToCurrency, sumLineItems } from '$lib/utils/moneyHelpers';
 
 	export let invoice: Invoice;
+
+	const getInvoiceLabel = (invoice: Invoice) => {
+		return invoice.invoiceStatus === 'sent' && isLate(invoice.dueDate)
+			? 'late'
+			: invoice.invoiceStatus;
+	};
 </script>
 
 <!-- invoice rows -->
@@ -14,10 +20,7 @@
 	class="items-center py-3 bg-white rounded-lg lg:py-6 invoice-table invoice-row shadow-tableRow"
 >
 	<div class="status">
-		<Tag
-			className={'ml-auto lg:ml-0'}
-			label={isLate(invoice.dueDate) ? 'late' : invoice.invoiceStatus}
-		/>
+		<Tag className={'ml-auto lg:ml-0'} label={getInvoiceLabel(invoice)} />
 	</div>
 	<div class="text-sm lg:text-base duedate">{convertDateFormat(invoice.dueDate)}</div>
 	<div class="text-sm lg:text-base invoicenumber">{invoice.invoiceNumber}</div>
