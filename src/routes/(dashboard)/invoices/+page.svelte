@@ -42,7 +42,7 @@
 		<div />
 		<div />
 	</div>
-	<div class="flex flex-col">
+	<div class="flex flex-col-reverse">
 		{#each $invoices as invoice}
 			<InvoiceRow {invoice} />
 		{/each}
