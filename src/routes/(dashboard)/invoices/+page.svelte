@@ -5,6 +5,7 @@
 	import Search from '$lib/components/Search.svelte';
 	import InvoiceRow from './InvoiceRow.svelte';
 	import { totalAmount, numToCurrency } from '$lib/utils/moneyHelpers';
+	import BlankState from './BlankState.svelte';
 
 	onMount(() => {
 		loadInvoices();
@@ -42,15 +43,20 @@
 		<div />
 		<div />
 	</div>
-	<div class="flex flex-col-reverse">
-		{#each $invoices as invoice}
-			<InvoiceRow {invoice} />
-		{/each}
-	</div>
-</div>
 
-<!-- summary row -->
-<CircledAmount label={'Total'} amount={numToCurrency(totalAmount($invoices))} />
+	{#if $invoices === null}
+		Loading...
+	{:else if $invoices.length <= 0}
+		<BlankState />
+	{:else}
+		<div class="flex flex-col-reverse">
+			{#each $invoices as invoice}
+				<InvoiceRow {invoice} />
+			{/each}
+		</div>
+		<CircledAmount label={'Total'} amount={numToCurrency(totalAmount($invoices))} />
+	{/if}
+</div>
 
 <style lang="postcss">
 	.table-header {
