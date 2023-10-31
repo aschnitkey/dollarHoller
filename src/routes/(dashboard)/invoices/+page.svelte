@@ -6,6 +6,7 @@
 	import InvoiceRow from './InvoiceRow.svelte';
 	import { totalAmount, numToCurrency } from '$lib/utils/moneyHelpers';
 	import BlankState from './BlankState.svelte';
+	import InvoiceRowHeader from './InvoiceRowHeader.svelte';
 
 	onMount(() => {
 		loadInvoices();
@@ -20,7 +21,11 @@
 	class="flex flex-col-reverse items-start justify-between mb-7 lg:mb-16 lg:flex-row lg:items-center md:gap-y-4 gap-y-6"
 >
 	<!-- Search field -->
-	<Search />
+	{#if $invoices.length > 0}
+		<Search />
+	{:else}
+		<div />
+	{/if}
 
 	<!-- New Invoice Button -->
 	<div>
@@ -34,21 +39,13 @@
 <!-- list of invoices -->
 <div>
 	<!-- header -->
-	<div class="hidden lg:grid text-daisyBush invoice-table table-header">
-		<h3>Status</h3>
-		<h3>Due Date</h3>
-		<h3>ID</h3>
-		<h3>Client</h3>
-		<h3 class="text-right">Amount</h3>
-		<div />
-		<div />
-	</div>
 
 	{#if $invoices === null}
 		Loading...
 	{:else if $invoices.length <= 0}
 		<BlankState />
 	{:else}
+		<InvoiceRowHeader className={'text-daisyBush'} />
 		<div class="flex flex-col-reverse">
 			{#each $invoices as invoice}
 				<InvoiceRow {invoice} />
@@ -57,9 +54,3 @@
 		<CircledAmount label={'Total'} amount={numToCurrency(totalAmount($invoices))} />
 	{/if}
 </div>
-
-<style lang="postcss">
-	.table-header {
-		@apply text-xl font-black leading-snug;
-	}
-</style>
