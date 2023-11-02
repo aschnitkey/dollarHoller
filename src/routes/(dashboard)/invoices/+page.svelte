@@ -7,7 +7,9 @@
 	import { totalAmount, numToCurrency } from '$lib/utils/moneyHelpers';
 	import BlankState from './BlankState.svelte';
 	import InvoiceRowHeader from './InvoiceRowHeader.svelte';
-	import Portal from '$lib/components/Portal.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+
+	let isModalShowing = true;
 
 	onMount(() => {
 		loadInvoices();
@@ -39,8 +41,6 @@
 
 <!-- list of invoices -->
 <div>
-	<Portal><div>Invoice Form</div></Portal>
-
 	{#if $invoices === null}
 		Loading...
 	{:else if $invoices.length <= 0}
@@ -54,4 +54,6 @@
 		</div>
 		<CircledAmount label={'Total'} amount={numToCurrency(totalAmount($invoices))} />
 	{/if}
+	<button on:click={() => (isModalShowing = true)}>Show Modal</button>
 </div>
+<Modal isVisible={isModalShowing} on:close={() => (isModalShowing = false)} />
