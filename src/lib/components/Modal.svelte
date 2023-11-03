@@ -8,6 +8,14 @@
 	const dispatch = createEventDispatcher();
 </script>
 
+<svelte:window
+	on:keydown={(event) => {
+		if (event.key === 'Escape') {
+			dispatch('close');
+		}
+	}}
+/>
+
 {#if isVisible}
 	<Portal>
 		<Overlay />
