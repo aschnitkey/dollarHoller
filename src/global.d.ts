@@ -1,4 +1,5 @@
 interface Invoice {
+	id: string;
 	invoiceStatus: InvoiceStatus;
 	issueDate: string;
 	invoiceNumber: string;
@@ -12,7 +13,7 @@ interface Invoice {
 }
 
 interface Client {
-	clientStatus: ClientStatus;
+	clientStatus?: ClientStatus;
 	id: string;
 	name: string;
 	email: string;
