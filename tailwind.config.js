@@ -16,6 +16,7 @@ export default {
 			boxShadow: {
 				colored: '0px 7px 16px 0px rgba(127, 91, 220, 0.002)',
 				coloredHover: '0px 16px 25px rgba(127, 91, 220, 0.30)',
+				slidePanel: '-4px 0px 44px 0px rgba(0, 0, 0, 0.25)',
 				tableRow: '0px 0px 6px 0px rgba(0, 0, 0, 0.16)'
 			},
 			colors: {
@@ -39,6 +40,13 @@ export default {
 			gridTemplateColumns: {
 				invoiceTable: '100px 100px 60px 1fr 116px 32px 32px',
 				invoiceTableMobile: '1fr 90px'
+			},
+			zIndex: {
+				modal: 999,
+				slidePanel: 998,
+				overlay: 997,
+				navBarToggle: 91,
+				navBar: 90
 			}
 		}
 	},

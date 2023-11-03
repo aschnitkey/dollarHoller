@@ -19,7 +19,7 @@
 {#if isVisible}
 	<Portal>
 		<Overlay />
-		<div class="fixed inset-0 z-[999] center">
+		<div class="fixed inset-0 z-modal center">
 			<div class=" max-w-[450px] min-h-[230px] w-full rounded-lg bg-white px-10 py-7 relative">
 				<button
 					on:click={() => dispatch('close')}
