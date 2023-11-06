@@ -9,6 +9,7 @@
 	import InvoiceRowHeader from './InvoiceRowHeader.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import SlidePanel from '$lib/components/SlidePanel.svelte';
+	import InvoiceForm from './InvoiceForm.svelte';
 
 	let isInvoiceFormShowing = false;
 
@@ -60,5 +61,5 @@
 </div>
 
 {#if isInvoiceFormShowing}
-	<SlidePanel on:closePanel={() => (isInvoiceFormShowing = false)}>New Invoice</SlidePanel>
+	<SlidePanel on:closePanel={() => (isInvoiceFormShowing = false)}><InvoiceForm /></SlidePanel>
 {/if}
