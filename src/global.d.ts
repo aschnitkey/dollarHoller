@@ -24,6 +24,7 @@ interface Client {
 }
 
 interface LineItems {
+	id: string;
 	description: string;
 	quantity: number;
 	amount: number;

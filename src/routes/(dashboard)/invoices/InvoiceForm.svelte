@@ -1,6 +1,7 @@
 <script>
 	import Button from '$lib/components/Button.svelte';
 	import Trash from '$lib/components/icon/Trash.svelte';
+	import LineItemRows from './LineItemRows.svelte';
 </script>
 
 <h2 class="text-3xl font-bold mb-7 font-sansSerif text-daisyBush">Add an Invoice</h2>
@@ -43,7 +44,7 @@
 	</div>
 
 	<!-- line items -->
-	<div class="col-span-6 field">Line Items</div>
+	<div class="col-span-6 field"><LineItemRows /></div>
 
 	<!-- notes -->
 	<div class="col-span-6 field">
