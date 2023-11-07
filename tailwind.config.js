@@ -11,7 +11,11 @@ export default {
 			backgroundImage: {
 				arrowLeftUp: "url('/images/arrow-left-up.svg')",
 				arrowRightUp: "url('/images/arrow-right-up.svg')",
+				chevronDown: "url('/images/chevron-down.svg')",
 				circle: "url('/images/circle.svg')"
+			},
+			backgroundPosition: {
+				rightCenter: '97% center'
 			},
 			boxShadow: {
 				colored: '0px 7px 16px 0px rgba(127, 91, 220, 0.002)',

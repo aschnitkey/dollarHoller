@@ -1,5 +1,6 @@
 <script>
 	import Button from '$lib/components/Button.svelte';
+	import Trash from '$lib/components/icon/Trash.svelte';
 </script>
 
 <h2 class="text-3xl font-bold mb-7 font-sansSerif text-daisyBush">Add an Invoice</h2>
@@ -12,9 +13,9 @@
 			<option value="zeal">Zeal</option>
 		</select>
 	</div>
-	<div class="flex items-end col-span-3 field">
+	<div class="flex items-end col-span-2 field gap-x-5">
 		<div class="text-base font-bold text-monsoon leading-[3.5rem]">or</div>
-		<Button label="+ Client" onClick={() => {}} />
+		<Button label="+ Client" onClick={() => {}} style="outline" isAnimated={false} />
 	</div>
 
 	<!-- invoice id -->
@@ -66,10 +67,16 @@
 	<!-- buttons -->
 	<div class="col-span-2 field">
 		<!-- only visible if editing -->
-		<button>Delete</button>
+		<Button
+			label="Delete"
+			onClick={() => {}}
+			style="textOnly"
+			isAnimated={false}
+			iconLeft={Trash}
+		/>
 	</div>
-	<div class="flex justify-end col-span-4 field">
-		<button>Cancel</button>
-		<button>Save</button>
+	<div class="flex justify-end col-span-4 field gap-x-5">
+		<Button label="Cancel" style="secondary" isAnimated={false} onClick={() => {}} />
+		<Button label="Save" onClick={() => {}} />
 	</div>
 </form>
