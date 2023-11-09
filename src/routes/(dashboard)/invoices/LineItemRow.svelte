@@ -1,12 +1,15 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
 	import Trash from '$lib/components/icon/Trash.svelte';
 
-	export let lineItem;
+	const dispatch = createEventDispatcher();
+
+	export let lineItem: LineItems;
 </script>
 
 <div class="py-2 border-b-2 invoice-line-item border-fog">
 	<div>
-		<input class="line-item" type="text" name="description" />
+		<input class="line-item" type="text" name="description" value={lineItem.id} />
 	</div>
 
 	<div>
@@ -22,7 +25,12 @@
 	</div>
 
 	<div>
-		<button class="w-10 h-10 center text-pastelPurple hover:text-lavenderIndigo"><Trash /></button>
+		<button
+			on:click|preventDefault={() => {
+				dispatch('removeLineItem', lineItem.id);
+			}}
+			class="w-10 h-10 center text-pastelPurple hover:text-lavenderIndigo"><Trash /></button
+		>
 	</div>
 </div>
 
