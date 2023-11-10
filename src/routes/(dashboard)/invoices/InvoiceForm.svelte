@@ -7,7 +7,7 @@
 	const blankLineItem = {
 		id: uuidv4(),
 		description: '',
-		quantity: 20,
+		quantity: 10,
 		amount: 10
 	};
 

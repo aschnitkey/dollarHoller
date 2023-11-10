@@ -42,3 +42,7 @@ export const currencyToNum = (currency: string): string => {
 	let numericString = currency.replace(/[^0-9.-]+/g, '');
 	return parseFloat(numericString).toFixed(2);
 };
+
+export const twoDecimals = (num: number): string => {
+	return num.toFixed(2);
+};

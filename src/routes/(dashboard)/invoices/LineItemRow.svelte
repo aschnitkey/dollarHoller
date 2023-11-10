@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Trash from '$lib/components/icon/Trash.svelte';
-	import { numToCurrency, currencyToNum } from '$lib/utils/moneyHelpers';
+	import { numToCurrency, currencyToNum, twoDecimals } from '$lib/utils/moneyHelpers';
 
 	const dispatch = createEventDispatcher();
 
 	export let lineItem: LineItems;
 
-	let unitPrice: string = currencyToNum(numToCurrency(lineItem.amount / lineItem.quantity));
+	let unitPrice: string = twoDecimals(lineItem.amount / lineItem.quantity);
 </script>
 
 <div class="py-2 border-b-2 invoice-line-item border-fog">
@@ -23,6 +23,7 @@
 			step="0.01"
 			min="0"
 			bind:value={unitPrice}
+			on:blur={() => (unitPrice = twoDecimals(Number(unitPrice)))}
 		/>
 	</div>
 
