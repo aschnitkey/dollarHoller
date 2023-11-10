@@ -32,3 +32,13 @@ export const totalAmount = (invoices: Invoice[] | undefined): number => {
 		return prev + invoiceSum;
 	}, 0);
 };
+
+/**
+ * Takes in a currency string and return the numeric value
+ * @param currency
+ * @returns number
+ */
+export const currencyToNum = (currency: string): string => {
+	let numericString = currency.replace(/[^0-9.-]+/g, '');
+	return parseFloat(numericString).toFixed(2);
+};

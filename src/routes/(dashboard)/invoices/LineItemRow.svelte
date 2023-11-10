@@ -1,27 +1,50 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Trash from '$lib/components/icon/Trash.svelte';
+	import { numToCurrency, currencyToNum } from '$lib/utils/moneyHelpers';
 
 	const dispatch = createEventDispatcher();
 
 	export let lineItem: LineItems;
+
+	let unitPrice: string = currencyToNum(numToCurrency(lineItem.amount / lineItem.quantity));
 </script>
 
 <div class="py-2 border-b-2 invoice-line-item border-fog">
 	<div>
-		<input class="line-item" type="text" name="description" value={lineItem.id} />
+		<input class="line-item" type="text" name="description" bind:value={lineItem.description} />
 	</div>
 
 	<div>
-		<input class="text-right line-item" type="number" name="unitPrice" step="0.01" min="0" />
+		<input
+			class="text-right line-item"
+			type="number"
+			name="unitPrice"
+			step="0.01"
+			min="0"
+			bind:value={unitPrice}
+		/>
 	</div>
 
 	<div>
-		<input class="text-center line-item" type="number" name="quantity" min="0" />
+		<input
+			class="text-center line-item"
+			type="number"
+			name="quantity"
+			min="0"
+			bind:value={lineItem.quantity}
+		/>
 	</div>
 
 	<div>
-		<input class="text-right line-item" type="number" name="amount" step="0.01" min="0" />
+		<input
+			class="text-right line-item"
+			type="number"
+			name="amount"
+			step="0.01"
+			min="0"
+			bind:value={lineItem.amount}
+		/>
 	</div>
 
 	<div>

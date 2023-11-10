@@ -7,11 +7,11 @@
 	const blankLineItem = {
 		id: uuidv4(),
 		description: '',
-		quantity: 0,
-		amount: 0
+		quantity: 20,
+		amount: 10
 	};
 
-	let lineItems: LineItems[] = [blankLineItem];
+	let lineItems: LineItems[] = [{ ...blankLineItem }];
 
 	const addLineItem = () => {
 		lineItems = [...lineItems, { ...blankLineItem, id: uuidv4() }];
