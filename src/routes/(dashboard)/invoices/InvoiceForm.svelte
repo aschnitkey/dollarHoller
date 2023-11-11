@@ -7,8 +7,8 @@
 	const blankLineItem = {
 		id: uuidv4(),
 		description: '',
-		quantity: 10,
-		amount: 10
+		quantity: 0,
+		amount: 0
 	};
 
 	let lineItems: LineItems[] = [{ ...blankLineItem }];

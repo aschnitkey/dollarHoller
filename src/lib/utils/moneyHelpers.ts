@@ -21,6 +21,15 @@ export const numToCurrency = (num: number): string => {
 };
 
 /**
+ * Takes a dollar amount and converts it to cents
+ * @param {number} dollars
+ * @returns {number}
+ */
+export const dollarsToCents = (dollars: number): number => {
+	return dollars * 100;
+};
+
+/**
  * Takes in a collection of invoices and returns the total amount of all of the invoices
  * @param {Invoice[] | undefined} invoices
  * @returns {number}
