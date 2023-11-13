@@ -3,9 +3,26 @@
 	import LineItemRow from './LineItemRow.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import CircledAmount from '$lib/components/CircledAmount.svelte';
+	import { sumLineItems, numToCurrency, currencyToNum } from '$lib/utils/moneyHelpers';
 
 	export let lineItems: LineItems[] | undefined = undefined;
 	let dispatch = createEventDispatcher();
+	let subtotal: string = '0.00';
+	let discount: number;
+	let discountedAmount: string = '$0.00';
+	let finalTotal: string = '0.00';
+
+	$: if (sumLineItems(lineItems) > 0) {
+		subtotal = numToCurrency(sumLineItems(lineItems));
+	}
+	$: if (discount === null || discount === 0) {
+		discountedAmount = '0.00';
+	} else if (subtotal && discount) {
+		discountedAmount = numToCurrency(sumLineItems(lineItems) * (discount / 100));
+	}
+	$: finalTotal = numToCurrency(
+		parseFloat(currencyToNum(subtotal)) - parseFloat(currencyToNum(discountedAmount))
+	);
 </script>
 
 <div class="pb-2 border-b-2 invoice-line-item border-daisyBush">
@@ -17,7 +34,12 @@
 
 {#if lineItems}
 	{#each lineItems as lineItem, index}
-		<LineItemRow {lineItem} canDelete={index > 0 ? true : false} on:removeLineItem />
+		<LineItemRow
+			{lineItem}
+			canDelete={index > 0 ? true : false}
+			on:removeLineItem
+			on:updateLineItem
+		/>
 	{/each}
 {:else}
 	Line Items Go Here
@@ -36,7 +58,7 @@
 	</div>
 
 	<div class="py-5 font-bold text-right text-monsoon">Subtotal</div>
-	<div class="py-5 font-mono text-right">$250.00</div>
+	<div class="py-5 font-mono text-right">{subtotal}</div>
 </div>
 
 <div class="invoice-line-item">
@@ -48,15 +70,16 @@
 			name="discount"
 			min="0"
 			max="100"
+			bind:value={discount}
 		/>
 		<span class="absolute right-0 font-mono top-2">%</span>
 	</div>
-	<div class="py-5 font-mono text-right">$10.00</div>
+	<div class="py-5 font-mono text-right">{discountedAmount}</div>
 </div>
 
 <div class="invoice-line-item">
 	<div class="col-span-6">
-		<CircledAmount label="Total: " amount="1,440.00" />
+		<CircledAmount label="Total: " amount={finalTotal} />
 	</div>
 </div>
 

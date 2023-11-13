@@ -19,7 +19,10 @@
 
 	const removeLineItem = (event) => {
 		lineItems = lineItems.filter((item) => item.id !== event.detail);
-		console.log(`${event.detail} was deleted`);
+	};
+
+	const updateLineItem = () => {
+		lineItems = lineItems;
 	};
 </script>
 
@@ -64,7 +67,12 @@
 
 	<!-- line items -->
 	<div class="col-span-6 field">
-		<LineItemRows {lineItems} on:addLineItem={addLineItem} on:removeLineItem={removeLineItem} />
+		<LineItemRows
+			{lineItems}
+			on:addLineItem={addLineItem}
+			on:removeLineItem={removeLineItem}
+			on:updateLineItem={updateLineItem}
+		/>
 	</div>
 
 	<!-- notes -->
