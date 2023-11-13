@@ -1,8 +1,11 @@
 <script lang="ts">
+	import { slide } from 'svelte/transition';
 	import { v4 as uuidv4 } from 'uuid';
 	import Button from '$lib/components/Button.svelte';
 	import Trash from '$lib/components/icon/Trash.svelte';
 	import LineItemRows from './LineItemRows.svelte';
+	import el from 'date-fns/locale/el';
+	import { states } from '$lib/utils/states';
 
 	const blankLineItem = {
 		id: uuidv4(),
@@ -12,6 +15,7 @@
 	};
 
 	let lineItems: LineItems[] = [{ ...blankLineItem }];
+	let isNewClient: boolean = false;
 
 	const addLineItem = () => {
 		lineItems = [...lineItems, { ...blankLineItem, id: uuidv4() }];
@@ -30,15 +34,38 @@
 
 <form class="grid grid-cols-6 gap-x-5">
 	<!-- client -->
-	<div class="col-span-2 field">
-		<label for="client">Client</label>
-		<select name="client" id="client">
-			<option value="zeal">Zeal</option>
-		</select>
-	</div>
-	<div class="flex items-end col-span-2 field gap-x-5">
-		<div class="text-base font-bold text-monsoon leading-[3.5rem]">or</div>
-		<Button label="+ Client" onClick={() => {}} style="outline" isAnimated={false} />
+	<div class="col-span-4 field">
+		{#if !isNewClient}
+			<label for="client">Client</label>
+			<div class="flex items-end gap-x-5">
+				<select name="client" id="client">
+					<option value="zeal">Zeal</option>
+				</select>
+				<div class="text-base font-bold text-monsoon leading-[3.5rem]">or</div>
+				<Button
+					label="+ Client"
+					onClick={() => {
+						isNewClient = true;
+					}}
+					style="outline"
+					isAnimated={false}
+				/>
+			</div>
+		{:else}
+			<label for="NewClient">New Client</label>
+			<div class="flex items-end gap-x-5">
+				<input type="text" name="newClient" />
+				<div class="text-base font-bold leading-[3.5rem] text-monsoon">or</div>
+				<Button
+					label="Existing Client"
+					onClick={() => {
+						isNewClient = false;
+					}}
+					style="outline"
+					isAnimated={false}
+				/>
+			</div>
+		{/if}
 	</div>
 
 	<!-- invoice id -->
@@ -46,6 +73,41 @@
 		<label for="id">Invoice ID</label>
 		<input type="number" name="id" />
 	</div>
+
+	<!-- new client -->
+	{#if isNewClient}
+		<div class="grid col-span-6 field gap-x-5" transition:slide>
+			<div class="col-span-6 field">
+				<label for="email">Client's Email</label>
+				<input type="email" name="email" id="email" />
+			</div>
+		</div>
+
+		<div class="col-span-6 field">
+			<label for="street">Street</label>
+			<input type="text" name="street" id="street" />
+		</div>
+
+		<div class="col-span-2 field">
+			<label for="city">City</label>
+			<input type="text" name="city" id="city" />
+		</div>
+
+		<div class="col-span-2 field">
+			<label for="state">State</label>
+			<select name="state" id="state">
+				<option />
+				{#each states as state}
+					<option value={state.value}>{state.name}</option>
+				{/each}
+			</select>
+		</div>
+
+		<div class="col-span-2 field">
+			<label for="zip">Zip</label>
+			<input type="text" name="zip" id="zip" />
+		</div>
+	{/if}
 
 	<!-- due date -->
 	<div class="col-span-2 field">
