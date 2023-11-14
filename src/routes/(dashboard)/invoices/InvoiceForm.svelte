@@ -16,19 +16,28 @@
 		amount: 0
 	};
 
-	let lineItems: LineItems[] = [{ ...blankLineItem }];
 	let isNewClient: boolean = false;
+	let invoice: Invoice = {
+		client: {} as Client,
+		lineItems: [{ ...blankLineItem }] as LineItems[]
+	} as Invoice;
+	let newClient: Client = {} as Client;
 
 	const addLineItem = () => {
-		lineItems = [...lineItems, { ...blankLineItem, id: uuidv4() }];
+		invoice.lineItems = [...(invoice.lineItems as []), { ...blankLineItem, id: uuidv4() }];
 	};
 
 	const removeLineItem = (event) => {
-		lineItems = lineItems.filter((item) => item.id !== event.detail);
+		invoice.lineItems =
+			invoice?.lineItems && invoice.lineItems.filter((item) => item.id !== event.detail);
 	};
 
 	const updateLineItem = () => {
-		lineItems = lineItems;
+		invoice.lineItems = invoice.lineItems;
+	};
+
+	const handleSubmit = () => {
+		console.log({ invoice, newClient });
 	};
 
 	onMount(() => {
@@ -38,13 +47,13 @@
 
 <h2 class="text-3xl font-bold mb-7 font-sansSerif text-daisyBush">Add an Invoice</h2>
 
-<form class="grid grid-cols-6 gap-x-5">
+<form class="grid grid-cols-6 gap-x-5" on:submit|preventDefault={handleSubmit}>
 	<!-- client -->
 	<div class="col-span-4 field">
 		{#if !isNewClient}
 			<label for="client">Client</label>
 			<div class="flex items-end gap-x-5">
-				<select name="client" id="client" required={!isNewClient}>
+				<select name="client" id="client" required={!isNewClient} bind:value={invoice.client.id}>
 					<option />
 					{#each $clients as client}
 						<option value={client.id}>{client.name}</option>
@@ -63,7 +72,7 @@
 		{:else}
 			<label for="NewClient">New Client</label>
 			<div class="flex items-end gap-x-5">
-				<input type="text" name="newClient" required={isNewClient} />
+				<input type="text" name="newClient" required={isNewClient} bind:value={newClient.name} />
 				<div class="text-base font-bold leading-[3.5rem] text-monsoon">or</div>
 				<Button
 					label="Existing Client"
@@ -80,7 +89,7 @@
 	<!-- invoice id -->
 	<div class="col-span-2 field">
 		<label for="invoiceNumber">Invoice ID</label>
-		<input type="number" name="invoiceNumber" required />
+		<input type="number" name="invoiceNumber" required bind:value={invoice.invoiceNumber} />
 	</div>
 
 	<!-- new client -->
@@ -88,23 +97,29 @@
 		<div class="grid col-span-6 field gap-x-5" transition:slide>
 			<div class="col-span-6 field">
 				<label for="email">Client's Email</label>
-				<input type="email" name="email" id="email" required={isNewClient} />
+				<input
+					type="email"
+					name="email"
+					id="email"
+					required={isNewClient}
+					bind:value={newClient.email}
+				/>
 			</div>
 		</div>
 
 		<div class="col-span-6 field">
 			<label for="street">Street</label>
-			<input type="text" name="street" id="street" />
+			<input type="text" name="street" id="street" bind:value={newClient.street} />
 		</div>
 
 		<div class="col-span-2 field">
 			<label for="city">City</label>
-			<input type="text" name="city" id="city" />
+			<input type="text" name="city" id="city" bind:value={newClient.city} />
 		</div>
 
 		<div class="col-span-2 field">
 			<label for="state">State</label>
-			<select name="state" id="state">
+			<select name="state" id="state" bind:value={newClient.state}>
 				<option />
 				{#each states as state}
 					<option value={state.value}>{state.name}</option>
@@ -114,32 +129,32 @@
 
 		<div class="col-span-2 field">
 			<label for="zip">Zip</label>
-			<input type="text" name="zip" id="zip" />
+			<input type="text" name="zip" id="zip" bind:value={newClient.zip} />
 		</div>
 	{/if}
 
 	<!-- due date -->
 	<div class="col-span-2 field">
 		<label for="dueDate">Due Date</label>
-		<input type="date" name="dueDate" min={today} required />
+		<input type="date" name="dueDate" min={today} required bind:value={invoice.dueDate} />
 	</div>
 
 	<!-- issue date -->
 	<div class="col-span-2 col-start-5 field">
 		<label for="issueDate">Issue Date</label>
-		<input type="date" name="issueDate" min={today} />
+		<input type="date" name="issueDate" min={today} bind:value={invoice.issueDate} />
 	</div>
 
 	<!-- subject -->
 	<div class="col-span-6 field">
 		<label for="subject">Subject Line</label>
-		<input type="text" id="subject" />
+		<input type="text" id="subject" bind:value={invoice.subject} />
 	</div>
 
 	<!-- line items -->
 	<div class="col-span-6 field">
 		<LineItemRows
-			{lineItems}
+			lineItems={invoice.lineItems}
 			on:addLineItem={addLineItem}
 			on:removeLineItem={removeLineItem}
 			on:updateLineItem={updateLineItem}
@@ -151,7 +166,7 @@
 		<label for="notes"
 			>Notes <span class="font-normal">(optional, displayed on invoice)</span></label
 		>
-		<textarea name="notes" id="notes" />
+		<textarea name="notes" id="notes" bind:value={invoice.notes} />
 	</div>
 
 	<!-- terms -->
@@ -159,7 +174,7 @@
 		<label for="terms"
 			>Terms <span class="font-normal">(optional, enter your terms and conditions)</span></label
 		>
-		<textarea name="terms" id="terms" />
+		<textarea name="terms" id="terms" bind:value={invoice.terms} />
 		<div class="text-xs text-gray-400">
 			Formatting tips: <strong>*bold*</strong>, <em>_italics_</em>
 		</div>
