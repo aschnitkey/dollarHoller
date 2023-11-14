@@ -13,3 +13,8 @@ export const deleteInvoice = (invoiceToDelete: Invoice) => {
 	);
 	return invoiceToDelete;
 };
+
+export const addInvoice = (invoiceToAdd: Invoice) => {
+	invoices.update((prev: Invoice[]) => [...prev, invoiceToAdd]);
+	return invoiceToAdd;
+};

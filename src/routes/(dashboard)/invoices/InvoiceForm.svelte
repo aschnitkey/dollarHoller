@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { clients, loadClients } from '$lib/stores/ClientStore';
+	import { addClient, clients, loadClients } from '$lib/stores/ClientStore';
 	import { slide } from 'svelte/transition';
 	import { v4 as uuidv4 } from 'uuid';
 	import Button from '$lib/components/Button.svelte';
@@ -8,6 +8,7 @@
 	import { states } from '$lib/utils/states';
 	import { onMount } from 'svelte';
 	import { today } from '$lib/utils/dateHelpers';
+	import { addInvoice } from '$lib/stores/InvoiceStore';
 
 	const blankLineItem = {
 		id: uuidv4(),
@@ -21,13 +22,15 @@
 		client: {} as Client,
 		lineItems: [{ ...blankLineItem }] as LineItems[]
 	} as Invoice;
-	let newClient: Client = {} as Client;
+	let newClient: Partial<Client> = {};
+
+	export let closePanel: () => void = () => {};
 
 	const addLineItem = () => {
 		invoice.lineItems = [...(invoice.lineItems as []), { ...blankLineItem, id: uuidv4() }];
 	};
 
-	const removeLineItem = (event) => {
+	const removeLineItem = (event: CustomEvent) => {
 		invoice.lineItems =
 			invoice?.lineItems && invoice.lineItems.filter((item) => item.id !== event.detail);
 	};
@@ -37,7 +40,14 @@
 	};
 
 	const handleSubmit = () => {
-		console.log({ invoice, newClient });
+		if (isNewClient) {
+			invoice.client = newClient as Client;
+			addClient(newClient as Client);
+		}
+
+		addInvoice(invoice);
+
+		closePanel();
 	};
 
 	onMount(() => {
@@ -53,7 +63,16 @@
 		{#if !isNewClient}
 			<label for="client">Client</label>
 			<div class="flex items-end gap-x-5">
-				<select name="client" id="client" required={!isNewClient} bind:value={invoice.client.id}>
+				<select
+					name="client"
+					id="client"
+					required={!isNewClient}
+					bind:value={invoice.client.id}
+					on:change={() => {
+						const selectedClient = $clients.find((client) => client.id === invoice.client.id);
+						invoice.client.name = selectedClient?.name !== undefined ? selectedClient.name : '';
+					}}
+				>
 					<option />
 					{#each $clients as client}
 						<option value={client.id}>{client.name}</option>
@@ -64,6 +83,8 @@
 					label="+ Client"
 					onClick={() => {
 						isNewClient = true;
+						invoice.client.name = '';
+						invoice.client.email = '';
 					}}
 					style="outline"
 					isAnimated={false}
@@ -78,6 +99,7 @@
 					label="Existing Client"
 					onClick={() => {
 						isNewClient = false;
+						newClient = {};
 					}}
 					style="outline"
 					isAnimated={false}
@@ -154,6 +176,7 @@
 	<!-- line items -->
 	<div class="col-span-6 field">
 		<LineItemRows
+			discount={invoice.discount}
 			lineItems={invoice.lineItems}
 			on:addLineItem={addLineItem}
 			on:removeLineItem={removeLineItem}
@@ -192,7 +215,14 @@
 		/>
 	</div>
 	<div class="flex justify-end col-span-4 field gap-x-5">
-		<Button label="Cancel" style="secondary" isAnimated={false} onClick={() => {}} />
+		<Button
+			label="Cancel"
+			style="secondary"
+			isAnimated={false}
+			onClick={() => {
+				closePanel();
+			}}
+		/>
 		<button
 			type="submit"
 			class="text-white transition translate-y-0 button shadow-colored hover:shadow-coloredHover hover:-translate-y-2 bg-lavenderIndigo"

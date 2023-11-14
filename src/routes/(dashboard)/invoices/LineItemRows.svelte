@@ -6,9 +6,9 @@
 	import { sumLineItems, numToCurrency, currencyToNum } from '$lib/utils/moneyHelpers';
 
 	export let lineItems: LineItems[] | undefined = undefined;
+	export let discount: number = 0;
 	let dispatch = createEventDispatcher();
 	let subtotal: string = '0.00';
-	let discount: number;
 	let discountedAmount: string = '$0.00';
 	let finalTotal: string = '0.00';
 
@@ -21,7 +21,7 @@
 		discountedAmount = numToCurrency(sumLineItems(lineItems) * (discount / 100));
 	}
 	$: finalTotal = numToCurrency(
-		parseFloat(currencyToNum(subtotal)) - parseFloat(currencyToNum(discountedAmount))
+		Number(currencyToNum(subtotal)) - Number(currencyToNum(discountedAmount))
 	);
 </script>
 

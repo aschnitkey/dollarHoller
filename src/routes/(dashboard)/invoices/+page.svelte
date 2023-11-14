@@ -61,5 +61,11 @@
 </div>
 
 {#if isInvoiceFormShowing}
-	<SlidePanel on:closePanel={() => (isInvoiceFormShowing = false)}><InvoiceForm /></SlidePanel>
+	<SlidePanel on:closePanel={() => (isInvoiceFormShowing = false)}
+		><InvoiceForm
+			closePanel={() => {
+				isInvoiceFormShowing = false;
+			}}
+		/></SlidePanel
+	>
 {/if}
