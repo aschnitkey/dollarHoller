@@ -5,9 +5,9 @@
 	import Button from '$lib/components/Button.svelte';
 	import Trash from '$lib/components/icon/Trash.svelte';
 	import LineItemRows from './LineItemRows.svelte';
-	import el from 'date-fns/locale/el';
 	import { states } from '$lib/utils/states';
 	import { onMount } from 'svelte';
+	import { today } from '$lib/utils/dateHelpers';
 
 	const blankLineItem = {
 		id: uuidv4(),
@@ -78,8 +78,8 @@
 
 	<!-- invoice id -->
 	<div class="col-span-2 field">
-		<label for="id">Invoice ID</label>
-		<input type="number" name="id" />
+		<label for="invoiceNumber">Invoice ID</label>
+		<input type="number" name="invoiceNumber" required />
 	</div>
 
 	<!-- new client -->
@@ -120,13 +120,13 @@
 	<!-- due date -->
 	<div class="col-span-2 field">
 		<label for="dueDate">Due Date</label>
-		<input type="date" name="dueDate" />
+		<input type="date" name="dueDate" min={today} required />
 	</div>
 
 	<!-- issue date -->
 	<div class="col-span-2 col-start-5 field">
 		<label for="issueDate">Issue Date</label>
-		<input type="date" name="issueDate" />
+		<input type="date" name="issueDate" min={today} />
 	</div>
 
 	<!-- subject -->
@@ -177,6 +177,10 @@
 	</div>
 	<div class="flex justify-end col-span-4 field gap-x-5">
 		<Button label="Cancel" style="secondary" isAnimated={false} onClick={() => {}} />
-		<Button label="Save" onClick={() => {}} />
+		<button
+			type="submit"
+			class="text-white transition translate-y-0 button shadow-colored hover:shadow-coloredHover hover:-translate-y-2 bg-lavenderIndigo"
+			>Save</button
+		>
 	</div>
 </form>

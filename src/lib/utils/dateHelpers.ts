@@ -1,4 +1,6 @@
-import { isBefore } from 'date-fns';
+import { isBefore, format } from 'date-fns';
+
+export const today = format(new Date(), 'yyyy-MM-dd');
 
 /**
  * This takes in a date and returns the numeric values as an array of strings

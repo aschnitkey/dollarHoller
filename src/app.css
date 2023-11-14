@@ -56,6 +56,10 @@
 	.field {
 		@apply mb-6;
 	}
+
+	.button {
+		@apply relative flex items-center px-5 py-2 text-base font-black rounded-lg lg:px-10 lg:py-3 lg:text-xl whitespace-nowrap font-sansSerif;
+	}
 }
 
 @layer utilities {
