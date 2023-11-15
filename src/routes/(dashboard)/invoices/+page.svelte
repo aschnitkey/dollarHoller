@@ -60,6 +60,7 @@
 	{/if}
 </div>
 
+<!-- Slide Panel -->
 {#if isInvoiceFormShowing}
 	<SlidePanel on:closePanel={() => (isInvoiceFormShowing = false)}
 		><InvoiceForm

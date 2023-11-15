@@ -9,6 +9,7 @@
 	import { onMount } from 'svelte';
 	import { today } from '$lib/utils/dateHelpers';
 	import { addInvoice } from '$lib/stores/InvoiceStore';
+	import el from 'date-fns/locale/el';
 
 	const blankLineItem = {
 		id: uuidv4(),
@@ -18,11 +19,13 @@
 	};
 
 	let isNewClient: boolean = false;
-	let invoice: Invoice = {
+	export let invoice: Invoice = {
 		client: {} as Client,
 		lineItems: [{ ...blankLineItem }] as LineItems[]
 	} as Invoice;
 	let newClient: Partial<Client> = {};
+
+	export let formState: 'create' | 'edit' = 'create';
 
 	export let closePanel: () => void = () => {};
 
@@ -55,7 +58,13 @@
 	});
 </script>
 
-<h2 class="text-3xl font-bold mb-7 font-sansSerif text-daisyBush">Add an Invoice</h2>
+<h2 class="text-3xl font-bold mb-7 font-sansSerif text-daisyBush">
+	{#if formState === 'create'}
+		Add
+	{:else}
+		Edit
+	{/if} an Invoice
+</h2>
 
 <form class="grid grid-cols-6 gap-x-5" on:submit|preventDefault={handleSubmit}>
 	<!-- client -->
@@ -206,13 +215,15 @@
 	<!-- buttons -->
 	<div class="col-span-2 field">
 		<!-- only visible if editing -->
-		<Button
-			label="Delete"
-			onClick={() => {}}
-			style="textOnlyDestructive"
-			isAnimated={false}
-			iconLeft={Trash}
-		/>
+		{#if formState === 'edit'}
+			<Button
+				label="Delete"
+				onClick={() => {}}
+				style="textOnlyDestructive"
+				isAnimated={false}
+				iconLeft={Trash}
+			/>
+		{/if}
 	</div>
 	<div class="flex justify-end col-span-4 field gap-x-5">
 		<Button

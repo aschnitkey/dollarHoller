@@ -6,6 +6,8 @@
 	import Send from '$lib/components/icon/Send.svelte';
 	import Trash from '$lib/components/icon/Trash.svelte';
 	import Edit from '$lib/components/icon/Edit.svelte';
+	import SlidePanel from '$lib/components/SlidePanel.svelte';
+	import InvoiceForm from './InvoiceForm.svelte';
 	import { convertDateFormat, isLate } from '$lib/utils/dateHelpers';
 	import { numToCurrency, sumLineItems } from '$lib/utils/moneyHelpers';
 	import Modal from '$lib/components/Modal.svelte';
@@ -16,6 +18,7 @@
 	let isAddtionalOptionsShowing = false;
 	let isOptionsDisabled = false;
 	let isModalShowing = false;
+	let isInvoiceFormShowing = false;
 
 	const handleDelete = () => {
 		isModalShowing = true;
@@ -24,7 +27,8 @@
 	};
 
 	const handleEdit = () => {
-		console.log('editing');
+		isInvoiceFormShowing = true;
+		isAddtionalOptionsShowing = false;
 	};
 
 	const handleSendInvoice = () => {
@@ -113,6 +117,19 @@
 		</div>
 	</div>
 </Modal>
+
+<!-- Slide Panel -->
+{#if isInvoiceFormShowing}
+	<SlidePanel on:closePanel={() => (isInvoiceFormShowing = false)}
+		><InvoiceForm
+			{invoice}
+			formState={'edit'}
+			closePanel={() => {
+				isInvoiceFormShowing = false;
+			}}
+		/></SlidePanel
+	>
+{/if}
 
 <style>
 	.invoice-row {
