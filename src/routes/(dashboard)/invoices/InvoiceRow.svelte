@@ -10,9 +10,7 @@
 	import InvoiceForm from './InvoiceForm.svelte';
 	import { convertDateFormat, isLate } from '$lib/utils/dateHelpers';
 	import { numToCurrency, sumLineItems } from '$lib/utils/moneyHelpers';
-	import Modal from '$lib/components/Modal.svelte';
-	import Button from '$lib/components/Button.svelte';
-	import { deleteInvoice } from '$lib/stores/InvoiceStore';
+	import ConfirmDelete from './ConfirmDelete.svelte';
 
 	export let invoice: Invoice;
 	let isAddtionalOptionsShowing = false;
@@ -89,34 +87,13 @@
 	</div>
 </div>
 
-<Modal isVisible={isModalShowing} on:close={() => (isModalShowing = false)}>
-	<div class="flex flex-col items-center justify-between gap-6 h-full min-h-[175px]">
-		<div class="text-xl font-bold text-center text-daisyBush">
-			Are you sure you wish to delete this invoice to
-			<span class="text-scarlet">{invoice.client.name}</span> for
-			<span class="text-scarlet">{numToCurrency(sumLineItems(invoice.lineItems))}</span>?
-		</div>
-		<div class="flex gap-4">
-			<Button
-				label={'Cancel'}
-				onClick={() => {
-					isModalShowing = false;
-				}}
-				isAnimated={false}
-				style="secondary"
-			/>
-			<Button
-				label={'Yes, Delete It'}
-				onClick={() => {
-					isModalShowing = false;
-					deleteInvoice(invoice);
-				}}
-				isAnimated={false}
-				style="destructive"
-			/>
-		</div>
-	</div>
-</Modal>
+<ConfirmDelete
+	{invoice}
+	{isModalShowing}
+	on:close={() => {
+		isModalShowing = false;
+	}}
+/>
 
 <!-- Slide Panel -->
 {#if isInvoiceFormShowing}

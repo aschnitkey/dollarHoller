@@ -18,3 +18,10 @@ export const addInvoice = (invoiceToAdd: Invoice) => {
 	invoices.update((prev: Invoice[]) => [...prev, invoiceToAdd]);
 	return invoiceToAdd;
 };
+
+export const updateInvoice = (invoiceToUpdate: Invoice) => {
+	invoices.update((prev: Invoice[]) =>
+		prev.map((curr: Invoice) => (curr.id === invoiceToUpdate.id ? invoiceToUpdate : curr))
+	);
+	return invoiceToUpdate;
+};
