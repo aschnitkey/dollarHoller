@@ -72,6 +72,9 @@
 			min="0"
 			max="100"
 			bind:value={discount}
+			on:change={() => {
+				dispatch('updateDiscount', { discount });
+			}}
 		/>
 		<span class="absolute right-0 font-mono top-2">%</span>
 	</div>

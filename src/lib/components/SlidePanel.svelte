@@ -10,7 +10,7 @@
 <svelte:window
 	on:keydown={(event) => {
 		if (event.key === 'Escape') {
-			dispatch('closePanel');
+			dispatch('close');
 		}
 	}}
 />

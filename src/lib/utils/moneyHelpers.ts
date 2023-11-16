@@ -12,6 +12,24 @@ export const sumLineItems = (lineItems: LineItems[] | undefined): number => {
 };
 
 /**
+ * Takes line items and discount and returns the discounted amount
+ * @param {Array|undefined} lineItems
+ * @param {number|undefined} discount
+ * @returns {number}
+ */
+export const invoiceTotal = (
+	lineItems: LineItems[] | undefined,
+	discount: number | undefined
+): number => {
+	const lineItemsSum = sumLineItems(lineItems);
+	if (discount) {
+		const invoiceDiscount = lineItemsSum * (discount / 100);
+		return lineItemsSum - invoiceDiscount;
+	}
+	return lineItemsSum;
+};
+
+/**
  * Takes in a number and converts it to US currency which is returned as a string
  * @param {number} num
  * @returns {string}

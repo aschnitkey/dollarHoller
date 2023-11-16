@@ -26,6 +26,8 @@
 	let newClient: Partial<Client> = {};
 	let isModalShowing: boolean = false;
 
+	const initialDiscount = invoice.discount || 0;
+
 	export let formState: 'create' | 'edit' = 'create';
 
 	export let closePanel: () => void = () => {};
@@ -41,6 +43,10 @@
 
 	const updateLineItem = () => {
 		invoice.lineItems = invoice.lineItems;
+	};
+
+	const updateDiscount = (event: CustomEvent) => {
+		invoice.discount = event.detail.discount;
 	};
 
 	const handleSubmit = () => {
@@ -195,6 +201,7 @@
 			on:addLineItem={addLineItem}
 			on:removeLineItem={removeLineItem}
 			on:updateLineItem={updateLineItem}
+			on:updateDiscount={updateDiscount}
 		/>
 	</div>
 
