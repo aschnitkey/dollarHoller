@@ -47,7 +47,7 @@
 {/if}
 
 <div class="invoice-line-item">
-	<div class="col-span-2">
+	<div class="col-span-1 sm:col-span-2">
 		<Button
 			label="+ Line Item"
 			style="textOnly"
@@ -63,7 +63,7 @@
 </div>
 
 <div class="invoice-line-item">
-	<div class="col-span-2 py-5 font-bold text-right text-monsoon">Discount</div>
+	<div class="col-span-1 py-5 font-bold text-right sm:col-span-2 text-monsoon">Discount</div>
 	<div class="relative">
 		<input
 			class="w-full h-10 pr-4 text-right border-b-2 border-dashed line-item border-stone-300 focus:border-solid focus:border-lavenderIndigo focus:outline-none"
@@ -82,13 +82,13 @@
 </div>
 
 <div class="invoice-line-item">
-	<div class="col-span-6">
+	<div class="col-span-3 sm:col-span-6">
 		<CircledAmount label="Total: " amount={finalTotal} />
 	</div>
 </div>
 
 <style lang="postcss">
 	.table-header {
-		@apply text-sm font-bold text-daisyBush;
+		@apply hidden sm:block text-sm font-bold text-daisyBush;
 	}
 </style>

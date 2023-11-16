@@ -18,8 +18,9 @@
 	}
 </script>
 
-<div class="py-2 border-b-2 invoice-line-item border-fog">
-	<div>
+<div class="py-4 border-b-2 sm:py-2 invoice-line-item border-fog">
+	<div class="description">
+		<label for="description" class="line-item-label">Description</label>
 		<input
 			class="line-item"
 			type="text"
@@ -29,7 +30,8 @@
 		/>
 	</div>
 
-	<div>
+	<div class="unitPrice">
+		<label for="unitPrice" class="text-right line-item-label">Unit Price</label>
 		<input
 			class="text-right line-item"
 			type="number"
@@ -45,7 +47,8 @@
 		/>
 	</div>
 
-	<div>
+	<div class="qty">
+		<label for="quantity" class="text-center line-item-label">Qty</label>
 		<input
 			class="text-center line-item"
 			type="number"
@@ -59,7 +62,8 @@
 		/>
 	</div>
 
-	<div>
+	<div class="amount">
+		<label for="amount" class="text-right line-item-label">Amount</label>
 		<input
 			class="text-right line-item"
 			type="number"
@@ -71,7 +75,7 @@
 		/>
 	</div>
 
-	<div>
+	<div class="trash">
 		{#if canDelete}
 			<button
 				on:click|preventDefault={() => {
@@ -105,5 +109,9 @@
 	input[type='number']:disabled,
 	input[type='text']:disabled {
 		@apply border-b-0 bg-transparent px-0;
+	}
+
+	.line-item-label {
+		@apply block sm:hidden;
 	}
 </style>

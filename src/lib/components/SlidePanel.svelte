@@ -19,7 +19,7 @@
 <Portal>
 	<Overlay />
 	<div
-		class="fixed top-0 right-0 w-3/4 h-screen px-32 py-20 overflow-y-scroll bg-white z-slidePanel shadow-slidePanel"
+		class="fixed top-0 right-0 w-full h-screen px-5 pt-16 overflow-y-scroll bg-white lg:w-3/4 lg:px-32 lg:py-20 z-slidePanel shadow-slidePanel"
 	>
 		<button
 			class="absolute top-5 left-7 text-pastelPurple hover:text-daisyBush"
