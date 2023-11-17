@@ -30,3 +30,11 @@ interface LineItems {
 	quantity: number;
 	amount: number;
 }
+
+type NotificationType = 'success' | 'error' | 'info' | 'warning';
+
+interface Snackbar {
+	id: string;
+	message: string;
+	type: NotificationType;
+}

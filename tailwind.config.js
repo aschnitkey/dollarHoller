@@ -47,6 +47,7 @@ export default {
 				invoiceTableMobile: '1fr 90px'
 			},
 			zIndex: {
+				toaster: 1000,
 				modal: 999,
 				modalOverlay: 998,
 				slidePanel: 997,
