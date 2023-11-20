@@ -61,7 +61,7 @@
 		{numToCurrency(invoiceTotal(invoice.lineItems, invoice.discount))}
 	</div>
 	<div class="hidden text-sm lg:text-lg viewbutton lg:center lg:flex">
-		<a href="#" class=" text-pastelPurple hover:text-daisyBush">
+		<a href={`/invoices/${invoice.id}`} class=" text-pastelPurple hover:text-daisyBush">
 			<View />
 		</a>
 	</div>

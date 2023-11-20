@@ -25,3 +25,7 @@ export const updateInvoice = (invoiceToUpdate: Invoice) => {
 	);
 	return invoiceToUpdate;
 };
+
+export const getInvoiceById = (id: string) => {
+	return data.invoices.find((invoice: Invoice) => invoice.id === id);
+};
