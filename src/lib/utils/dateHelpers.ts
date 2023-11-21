@@ -19,7 +19,7 @@ export const splitDate = (inputDate: string): string[] => {
  */
 export const convertDateFormat = (inputDate: string): string => {
 	const [year, month, day] = splitDate(inputDate);
-	return `${parseInt(month)}-${parseInt(day)}-${parseInt(year)}`;
+	return `${parseInt(month)} / ${parseInt(day)} / ${parseInt(year)}`;
 };
 
 /**

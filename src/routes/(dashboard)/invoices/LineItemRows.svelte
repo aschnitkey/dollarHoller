@@ -7,6 +7,7 @@
 
 	export let lineItems: LineItems[] | undefined = undefined;
 	export let discount: number = 0;
+	export let isEditable: boolean = true;
 	let dispatch = createEventDispatcher();
 	let subtotal: string = '0.00';
 	let discountedAmount: string = '$0.00';
@@ -40,6 +41,7 @@
 			on:removeLineItem
 			on:updateLineItem
 			isRequired={index === 0}
+			{isEditable}
 		/>
 	{/each}
 {:else}
@@ -48,14 +50,16 @@
 
 <div class="invoice-line-item">
 	<div class="col-span-1 sm:col-span-2">
-		<Button
-			label="+ Line Item"
-			style="textOnly"
-			onClick={() => {
-				dispatch('addLineItem');
-			}}
-			isAnimated={false}
-		/>
+		{#if isEditable}
+			<Button
+				label="+ Line Item"
+				style="textOnly"
+				onClick={() => {
+					dispatch('addLineItem');
+				}}
+				isAnimated={false}
+			/>
+		{/if}
 	</div>
 
 	<div class="py-5 font-bold text-right text-monsoon">Subtotal</div>
@@ -71,6 +75,7 @@
 			name="discount"
 			min="0"
 			max="100"
+			disabled={!isEditable}
 			bind:value={discount}
 			on:change={() => {
 				dispatch('updateDiscount', { discount });

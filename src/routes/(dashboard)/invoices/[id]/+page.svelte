@@ -1,5 +1,10 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
+	import { convertDateFormat } from '$lib/utils/dateHelpers';
+	import da from 'date-fns/locale/da';
+	import LineItemRows from '../LineItemRows.svelte';
+
+	export let data: { invoice: Invoice };
 
 	const printInvoice = () => {
 		console.log('printing');
@@ -52,54 +57,56 @@
 	<div class="col-span-3">
 		<div class="label">Bill To:</div>
 		<p>
-			<strong>ZEAL</strong><br />
-			zeal@example.com<br />
-			789 Stellar St<br />
-			Anywhereville, CA 56789
+			<strong>{data.invoice.client.name}</strong><br />
+			{data.invoice.client.email}<br />
+			{data.invoice.client.street}<br />
+			{data.invoice.client.city}, {data.invoice.client.state}
+			{data.invoice.client.zip}
 		</p>
 	</div>
 
 	<div class="col-span-2 col-start-5">
 		<div class="label">Invoice ID</div>
-		<p>12348</p>
+		<p>{data.invoice.invoiceNumber}</p>
 	</div>
 
 	<div class="col-span-3">
 		<div class="label">Due Date</div>
-		<p>October 6, 2023</p>
+		<p>{convertDateFormat(data.invoice.dueDate)}</p>
 	</div>
 
 	<div class="col-span-2 col-start-5">
 		<div class="label">Issue Date</div>
-		<p>July 26, 2023</p>
+		<p>{convertDateFormat(data.invoice.issueDate)}</p>
 	</div>
 
 	<div class="col-span-6">
 		<div class="label">Subject</div>
-		<p>Website</p>
+		<p>{data.invoice.subject}</p>
 	</div>
 
 	<div class="col-span-6">
-		<!-- Issue Date -->
+		<!-- Line Items -->
+		<LineItemRows lineItems={data.invoice.lineItems} isEditable={false} />
 	</div>
 
-	<div class="col-span-6">
-		<div class="label">Notes</div>
-		<p>
-			Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, quisquam. Dicta impedit quo
-			laborum, hic suscipit eius ab minima facere delectus a nam porro, reiciendis veniam? Mollitia
-			est provident laudantium.
-		</p>
-	</div>
+	{#if data.invoice.notes}
+		<div class="col-span-6">
+			<div class="label">Notes</div>
+			<p>
+				{data.invoice.notes}
+			</p>
+		</div>
+	{/if}
 
-	<div class="col-span-6">
-		<div class="label">Terms and Conditions</div>
-		<p>
-			Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, quisquam. Dicta impedit quo
-			laborum, hic suscipit eius ab minima facere delectus a nam porro, reiciendis veniam? Mollitia
-			est provident laudantium.
-		</p>
-	</div>
+	{#if data.invoice.terms}
+		<div class="col-span-6">
+			<div class="label">Terms and Conditions</div>
+			<p>
+				{data.invoice.terms}
+			</p>
+		</div>
+	{/if}
 </div>
 
 <style lang="postcss">
