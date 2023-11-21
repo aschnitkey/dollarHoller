@@ -20,6 +20,7 @@ export default {
 			boxShadow: {
 				colored: '0px 7px 16px 0px rgba(127, 91, 220, 0.002)',
 				coloredHover: '0px 16px 25px rgba(127, 91, 220, 0.30)',
+				invoice: '-4px 0px 44px 0px rgba(0, 0, 0, 0.25)',
 				slidePanel: '-4px 0px 44px 0px rgba(0, 0, 0, 0.25)',
 				tableRow: '0px 0px 6px 0px rgba(0, 0, 0, 0.16)'
 			},
