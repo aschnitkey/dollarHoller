@@ -87,7 +87,11 @@
 
 	<div class="col-span-6">
 		<!-- Line Items -->
-		<LineItemRows lineItems={data.invoice.lineItems} isEditable={false} />
+		<LineItemRows
+			lineItems={data.invoice.lineItems}
+			isEditable={false}
+			discount={data?.invoice?.discount || 0}
+		/>
 	</div>
 
 	{#if data.invoice.notes}
