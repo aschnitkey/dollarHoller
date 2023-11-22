@@ -182,5 +182,13 @@
 			"state": "TN",
 			"zip": "87654"
 		}
-	]
+	],
+	"settings": {
+		"myName": "Andrew Schnitkey",
+		"email": "aschnitkey@gmail.com",
+		"street": "8329 Cliffthorne Way",
+		"city": "Columbus",
+		"state": "OH",
+		"zip": "43235"
+	}
 }
