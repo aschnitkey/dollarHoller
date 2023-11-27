@@ -25,7 +25,12 @@
 	});
 </script>
 
-<div class="fixed z-0 flex justify-between w-full max-w-screen-lg mb-16">
+<svelte:head>
+	<style>
+	</style>
+</svelte:head>
+
+<div class="fixed z-0 flex justify-between w-full max-w-screen-lg mb-16 noprint">
 	<h1 class="text-3xl font-bold text-daisyBush">Invoice</h1>
 	<div class="flex items-center gap-4">
 		<Button
@@ -41,7 +46,7 @@
 </div>
 
 <div
-	class="relative z-10 grid grid-cols-6 px-32 py-16 bg-white top-32 gap-x-5 gap-y-8 shadow-invoice"
+	class="relative z-10 grid grid-cols-6 px-32 py-16 bg-white top-32 gap-x-5 gap-y-8 shadow-invoice toprint"
 >
 	<div class="col-span-3">
 		<img
@@ -129,5 +134,16 @@
 <style lang="postcss">
 	.label {
 		@apply font-black text-monsoon;
+	}
+
+	@media print {
+		.toprint {
+			position: absolute !important;
+			top: 0 !important;
+			left: 0 !important;
+			width: 100vw !important;
+			height: 100vh !important;
+			box-shadow: none !important;
+		}
 	}
 </style>
