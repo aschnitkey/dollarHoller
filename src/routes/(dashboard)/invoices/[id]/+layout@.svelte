@@ -17,7 +17,7 @@
 	}}
 />
 
-<div class="w-screen h-full min-h-screen pt-12 pb-32 bg-whisper">
+<div class="w-screen h-full min-h-screen pt-16 pb-32 lg:pt-12 bg-whisper">
 	<main class="max-w-screen-lg min-h-screen mx-auto">
 		<a
 			href={previousPage ? previousPage : '/invoices'}

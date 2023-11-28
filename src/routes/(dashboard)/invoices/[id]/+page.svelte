@@ -37,9 +37,11 @@
 	</style>
 </svelte:head>
 
-<div class="fixed z-0 flex justify-between w-full max-w-screen-lg mb-16">
+<div
+	class="fixed z-0 flex flex-col justify-between w-full max-w-screen-lg px-4 mb-16 lg:px-0 gap-y-5 md:flex-row"
+>
 	<h1 class="text-3xl font-bold text-daisyBush">Invoice</h1>
-	<div class="flex items-center gap-4">
+	<div class="flex flex-wrap items-center gap-2 sm:gap-4 sm:flex-nowrap">
 		<Button
 			height="short"
 			label="Print"
@@ -51,16 +53,16 @@
 			height="short"
 			label={copyLinkLabel}
 			onClick={copyLink}
-			className="min-w-[177px] justify-center"
+			className="min-w-[100px] sm:min-w-[177px] justify-center"
 		/>
 		<Button height="short" label="Send" onClick={sendInvoice} />
 	</div>
 </div>
 
 <div
-	class="relative z-10 grid grid-cols-6 px-32 py-16 bg-white top-32 gap-x-5 gap-y-8 shadow-invoice toprint"
+	class="relative z-10 grid grid-cols-6 px-5 py-8 bg-white md:px-32 md:py-16 top-32 gap-x-5 gap-y-8 shadow-invoice toprint"
 >
-	<div class="col-span-3">
+	<div class="col-span-6 sm:col-span-3">
 		<img
 			src="/images/logo.png"
 			srcset="/images/logo@2x.png 2x, /images/logo.png 1x"
@@ -68,7 +70,7 @@
 		/>
 	</div>
 
-	<div class="col-span-2 col-start-5 pt-4">
+	<div class="col-span-6 pt-4 sm:col-span-2 sm:col-start-5">
 		{#if $settings && $settings.myName}
 			<div class="label">From</div>
 			<p>
@@ -88,7 +90,7 @@
 		{/if}
 	</div>
 
-	<div class="col-span-3">
+	<div class="col-span-6 sm:col-span-3">
 		<div class="label">Bill To:</div>
 		<p>
 			<strong>{data.invoice.client.name}</strong><br />
@@ -99,7 +101,7 @@
 		</p>
 	</div>
 
-	<div class="col-span-2 col-start-5">
+	<div class="col-span-6 sm:col-span-2 sm:col-start-5">
 		<div class="label">Invoice ID</div>
 		<p>{data.invoice.invoiceNumber}</p>
 	</div>
@@ -109,7 +111,7 @@
 		<p>{convertDateFormat(data.invoice.dueDate)}</p>
 	</div>
 
-	<div class="col-span-2 col-start-5">
+	<div class="col-span-3 sm:col-span-2 sm:col-start-5">
 		<div class="label">Issue Date</div>
 		<p>{convertDateFormat(data.invoice.issueDate)}</p>
 	</div>
