@@ -38,7 +38,7 @@
 </svelte:head>
 
 <div
-	class="fixed z-0 flex flex-col justify-between w-full max-w-screen-lg px-4 mb-16 lg:px-0 gap-y-5 md:flex-row"
+	class="fixed z-0 flex flex-col justify-between w-full max-w-screen-lg px-4 mb-16 lg:px-0 gap-y-5 md:flex-row print:hidden"
 >
 	<h1 class="text-3xl font-bold text-daisyBush">Invoice</h1>
 	<div class="flex flex-wrap items-center gap-2 sm:gap-4 sm:flex-nowrap">
@@ -60,9 +60,9 @@
 </div>
 
 <div
-	class="relative z-10 grid grid-cols-6 px-5 py-8 bg-white md:px-32 md:py-16 top-32 gap-x-5 gap-y-8 shadow-invoice toprint"
+	class="relative z-10 grid grid-cols-6 px-5 py-8 bg-white md:px-32 md:py-16 top-32 gap-x-5 gap-y-8 shadow-invoice print:py-0 print:shadow-none print:top-0"
 >
-	<div class="col-span-6 sm:col-span-3">
+	<div class="col-span-6 sm:col-span-3 print:col-span-3">
 		<img
 			src="/images/logo.png"
 			srcset="/images/logo@2x.png 2x, /images/logo.png 1x"
@@ -70,7 +70,7 @@
 		/>
 	</div>
 
-	<div class="col-span-6 pt-4 sm:col-span-2 sm:col-start-5">
+	<div class="col-span-6 pt-4 sm:col-span-2 sm:col-start-5 print:col-span-3 print:col-start-5">
 		{#if $settings && $settings.myName}
 			<div class="label">From</div>
 			<p>
@@ -90,7 +90,7 @@
 		{/if}
 	</div>
 
-	<div class="col-span-6 sm:col-span-3">
+	<div class="col-span-6 sm:col-span-3 print:col-span-3">
 		<div class="label">Bill To:</div>
 		<p>
 			<strong>{data.invoice.client.name}</strong><br />
@@ -101,7 +101,7 @@
 		</p>
 	</div>
 
-	<div class="col-span-6 sm:col-span-2 sm:col-start-5">
+	<div class="col-span-6 sm:col-span-2 sm:col-start-5 print:col-span-3 print:col-start-5">
 		<div class="label">Invoice ID</div>
 		<p>{data.invoice.invoiceNumber}</p>
 	</div>
@@ -148,16 +148,5 @@
 <style lang="postcss">
 	.label {
 		@apply font-black text-monsoon;
-	}
-
-	@media print {
-		.toprint {
-			position: absolute !important;
-			top: 0 !important;
-			left: 0 !important;
-			width: 100vw !important;
-			height: 100vh !important;
-			box-shadow: none !important;
-		}
 	}
 </style>
