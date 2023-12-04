@@ -35,11 +35,13 @@
 	<div class="status">
 		<Tag className={'ml-auto lg:ml-0'} label={client.clientStatus} />
 	</div>
-	<div class="text-base font-bold truncate lg:text-xl whitespace-nowrap client">{client.name}</div>
+	<div class="text-base font-bold truncate lg:text-xl whitespace-nowrap clientName">
+		{client.name}
+	</div>
 	<div class="font-mono text-sm font-bold text-right lg:text-lg received">$504.00</div>
 	<div class="font-mono text-sm font-bold text-right lg:text-lg text-scarlet balance">$240.00</div>
 	<div class="relative items-center justify-center hidden lg:flex">
-		<a href="#" class=" text-pastelPurple hover:text-daisyBush">
+		<a href="#" class="view text-pastelPurple hover:text-daisyBush">
 			<View />
 		</a>
 	</div>
@@ -48,7 +50,7 @@
 			on:click={() => {
 				isAddtionalOptionsShowing = !isAddtionalOptionsShowing;
 			}}
-			class=" text-pastelPurple hover:text-daisyBush"
+			class="three-dots text-pastelPurple hover:text-daisyBush"
 		>
 			<Dots />
 		</button>
@@ -96,41 +98,41 @@
 	>
 {/if} -->
 
-<style>
+<style lang="postcss">
 	.client-row {
 		grid-template-areas:
-			'clientNumber clientNumber'
-			'clientName amount'
-			'dueDate status';
+			'clientName status'
+			'received balance';
 	}
 
 	@media (min-width: 1024px) {
 		.client-row {
-			grid-template-areas: 'status client received balance viewButton moreButton';
+			grid-template-areas: 'status clientName received balance view three-dots';
 		}
 	}
 
-	.client-row .status {
+	.clientName {
+		grid-area: clientName;
+	}
+
+	.status {
 		grid-area: status;
 	}
 
-	.client-row .client {
-		grid-area: client;
-	}
-
-	.client-row .received {
+	.received {
+		@apply text-left lg:text-right;
 		grid-area: received;
 	}
+	.received::before {
+		@apply block text-xs font-bold lg:hidden;
+		content: 'Received';
+	}
 
-	.client-row .balance {
+	.balance {
 		grid-area: balance;
 	}
-
-	.client-row .viewbutton {
-		grid-area: viewButton;
-	}
-
-	.client-row .morebutton {
-		grid-area: moreButton;
+	.balance::before {
+		@apply block text-xs font-bold lg:hidden;
+		content: 'Balance';
 	}
 </style>

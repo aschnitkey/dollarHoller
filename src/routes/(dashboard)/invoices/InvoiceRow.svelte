@@ -108,7 +108,7 @@
 	>
 {/if}
 
-<style>
+<style lang="postcss">
 	.invoice-row {
 		grid-template-areas:
 			'invoiceNumber invoiceNumber'
