@@ -48,6 +48,15 @@ export const dollarsToCents = (dollars: number): number => {
 };
 
 /**
+ * Takes an amount in cents and converts it to dollars
+ * @param {number} cents
+ * @returns {number}
+ */
+export const centsToDollars = (cents: number): number => {
+	return cents / 100;
+};
+
+/**
  * Takes in a collection of invoices and returns the total amount of all of the invoices
  * @param {Invoice[] | undefined} invoices
  * @returns {number}
@@ -55,7 +64,7 @@ export const dollarsToCents = (dollars: number): number => {
 export const totalAmount = (invoices: Invoice[] | undefined): number => {
 	if (!invoices) return 0;
 	return invoices.reduce((prev, curr) => {
-		const invoiceSum = sumLineItems(curr.lineItems);
+		const invoiceSum = invoiceTotal(curr.lineItems, curr.discount);
 		return prev + invoiceSum;
 	}, 0);
 };

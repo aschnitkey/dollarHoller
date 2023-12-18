@@ -7,9 +7,32 @@
 	import Trash from '$lib/components/icon/Trash.svelte';
 	import Archive from '$lib/components/icon/Archive.svelte';
 	import Activate from '$lib/components/icon/Activate.svelte';
+	import { centsToDollars, numToCurrency, totalAmount } from '$lib/utils/moneyHelpers';
 
 	let isAddtionalOptionsShowing: boolean = false;
 	export let client: Client;
+
+	const receivedInvoices = () => {
+		if (client.invoices) {
+			// find invoices that have been paid
+			const paidInvoices = client.invoices.filter((invoice) => invoice.invoiceStatus === 'paid');
+
+			// get the sum of them
+			return totalAmount(paidInvoices);
+		}
+		return 0;
+	};
+
+	const balanceInvoices = () => {
+		if (client.invoices) {
+			// find invoices that have not been paid
+			const paidInvoices = client.invoices.filter((invoice) => invoice.invoiceStatus !== 'paid');
+
+			// get the sum of them
+			return totalAmount(paidInvoices);
+		}
+		return 0;
+	};
 
 	const handleEdit = () => {
 		console.log('editing');
@@ -38,8 +61,12 @@
 	<div class="text-base font-bold truncate lg:text-xl whitespace-nowrap clientName">
 		{client.name}
 	</div>
-	<div class="font-mono text-sm font-bold text-right lg:text-lg received">$504.00</div>
-	<div class="font-mono text-sm font-bold text-right lg:text-lg text-scarlet balance">$240.00</div>
+	<div class="font-mono text-sm font-bold text-right lg:text-lg received">
+		{numToCurrency(centsToDollars(receivedInvoices()))}
+	</div>
+	<div class="font-mono text-sm font-bold text-right lg:text-lg text-scarlet balance">
+		{numToCurrency(centsToDollars(balanceInvoices()))}
+	</div>
 	<div class="relative items-center justify-center hidden lg:flex">
 		<a href="#" class="view text-pastelPurple hover:text-daisyBush">
 			<View />

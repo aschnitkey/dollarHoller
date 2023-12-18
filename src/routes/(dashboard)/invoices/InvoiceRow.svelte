@@ -9,7 +9,12 @@
 	import SlidePanel from '$lib/components/SlidePanel.svelte';
 	import InvoiceForm from './InvoiceForm.svelte';
 	import { convertDateFormat, isLate } from '$lib/utils/dateHelpers';
-	import { invoiceTotal, numToCurrency, sumLineItems } from '$lib/utils/moneyHelpers';
+	import {
+		centsToDollars,
+		invoiceTotal,
+		numToCurrency,
+		sumLineItems
+	} from '$lib/utils/moneyHelpers';
 	import ConfirmDelete from './ConfirmDelete.svelte';
 
 	export let invoice: Invoice;
@@ -58,7 +63,7 @@
 	<div
 		class="font-mono text-sm font-bold text-right truncate lg:text-base whitespace-nowrap amount"
 	>
-		{numToCurrency(invoiceTotal(invoice.lineItems, invoice.discount))}
+		{numToCurrency(centsToDollars(invoiceTotal(invoice.lineItems, invoice.discount)))}
 	</div>
 	<div class="hidden text-sm lg:text-lg viewbutton lg:center lg:flex">
 		<a href={`/invoices/${invoice.id}`} class=" text-pastelPurple hover:text-daisyBush">
