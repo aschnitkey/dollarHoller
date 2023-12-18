@@ -3,7 +3,7 @@
 	import Trash from '$lib/components/icon/Trash.svelte';
 	import { states } from '$lib/utils/states';
 
-	export let closePanel = () => {};
+	export let closePanel: () => void = () => {};
 </script>
 
 <h2 class="text-3xl font-bold mb-7 font-sansSerif text-daisyBush">Add a Client</h2>
