@@ -5,7 +5,7 @@
 	import Search from '$lib/components/Search.svelte';
 	import InvoiceRow from './InvoiceRow.svelte';
 	import { totalAmount, numToCurrency } from '$lib/utils/moneyHelpers';
-	import BlankState from './BlankState.svelte';
+	import BlankState from '$lib/components/BlankState.svelte';
 	import InvoiceRowHeader from './InvoiceRowHeader.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import SlidePanel from '$lib/components/SlidePanel.svelte';
@@ -14,7 +14,7 @@
 	let isInvoiceFormShowing = false;
 
 	onMount(() => {
-		loadInvoices();
+		// loadInvoices();
 	});
 </script>
 

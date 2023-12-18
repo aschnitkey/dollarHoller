@@ -5,9 +5,10 @@
 	import Search from '$lib/components/Search.svelte';
 	import { clients, loadClients } from '$lib/stores/ClientStore';
 	import { onMount } from 'svelte';
+	import BlankState from '$lib/components/BlankState.svelte';
 
 	onMount(() => {
-		loadClients();
+		// loadClients();
 	});
 </script>
 
@@ -19,11 +20,11 @@
 	class="flex flex-col-reverse items-start justify-between mb-7 lg:mb-16 lg:flex-row lg:items-center md:gap-y-4 gap-y-6"
 >
 	<!-- Search field -->
-	<!-- {#if $invoices.length > 0} -->
-	<Search />
-	<!-- {:else}
+	{#if $clients.length > 0}
+		<Search />
+	{:else}
 		<div />
-	{/if} -->
+	{/if}
 
 	<!-- New Client Button -->
 	<div>
@@ -42,7 +43,7 @@
 	{#if $clients === null}
 		Loading...
 	{:else if $clients.length <= 0}
-		Blank State
+		<BlankState pageType="Client" />
 	{:else}
 		<!-- client header row -->
 		<ClientRowHeader />
