@@ -14,7 +14,7 @@
 	let isInvoiceFormShowing = false;
 
 	onMount(() => {
-		// loadInvoices();
+		loadInvoices();
 	});
 </script>
 
