@@ -1,37 +1,43 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
+	import Check from '$lib/components/icon/Check.svelte';
 	import Trash from '$lib/components/icon/Trash.svelte';
 	import { states } from '$lib/utils/states';
 
+	export let client: Client = {} as Client;
 	export let closePanel: () => void = () => {};
+
+	const handleSubmit = () => {
+		console.log({ client });
+	};
 </script>
 
 <h2 class="text-3xl font-bold mb-7 font-sansSerif text-daisyBush">Add a Client</h2>
 
-<form class="grid grid-cols-6 gap-x-5">
+<form class="grid grid-cols-6 gap-x-5" on:submit|preventDefault={handleSubmit}>
 	<div class="col-span-6 field">
 		<label for="name">Client Name</label>
-		<input type="text" name="name" required />
+		<input type="text" name="name" required bind:value={client.name} />
 	</div>
 
 	<div class="col-span-6 field">
 		<label for="email">Email Address</label>
-		<input type="email" name="email" required />
+		<input type="email" name="email" required bind:value={client.email} />
 	</div>
 
 	<div class="col-span-6 field">
 		<label for="street">Address</label>
-		<input type="text" name="street" />
+		<input type="text" name="street" bind:value={client.street} />
 	</div>
 
 	<div class="col-span-2 field">
 		<label for="city">City</label>
-		<input type="text" name="city" />
+		<input type="text" name="city" bind:value={client.city} />
 	</div>
 
 	<div class="col-span-2 field">
 		<label for="state">State</label>
-		<select name="state" id="state">
+		<select name="state" id="state" bind:value={client.state}>
 			<option />
 			{#each states as state}
 				<option value={state.value}>{state.name}</option>
@@ -41,7 +47,7 @@
 
 	<div class="col-span-2 field">
 		<label for="zip">Zip Code</label>
-		<input type="text" name="zip" />
+		<input type="text" name="zip" bind:value={client.zip} />
 	</div>
 
 	<div class="col-span-3 field">
@@ -54,7 +60,14 @@
 		/>
 	</div>
 
-	<div class="col-span-3 field">
+	<div class="flex justify-end col-span-3 field gap-x-5">
 		<Button label="Cancel" onClick={closePanel} style="secondary" isAnimated={false} />
+		<button
+			class="flex items-center justify-center text-white transition-all translate-y-0 button gap-x-2 bg-lavenderIndigo shadow-colored hover:shadow-coloredHover hover:-translate-y-2"
+			type="submit"
+		>
+			<Check />
+			Submit
+		</button>
 	</div>
 </form>
