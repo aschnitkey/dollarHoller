@@ -8,8 +8,12 @@
 	import Archive from '$lib/components/icon/Archive.svelte';
 	import Activate from '$lib/components/icon/Activate.svelte';
 	import { centsToDollars, numToCurrency, totalAmount } from '$lib/utils/moneyHelpers';
+	import ClientForm from './ClientForm.svelte';
+	import SlidePanel from '$lib/components/SlidePanel.svelte';
 
 	let isAddtionalOptionsShowing: boolean = false;
+	let isClientFormShowing: boolean = false;
+
 	export let client: Client;
 
 	const receivedInvoices = () => {
@@ -35,7 +39,8 @@
 	};
 
 	const handleEdit = () => {
-		console.log('editing');
+		isClientFormShowing = true;
+		isAddtionalOptionsShowing = false;
 	};
 
 	const handleActivate = () => {
@@ -113,17 +118,17 @@
 /> -->
 
 <!-- Slide Panel -->
-<!-- {#if isInvoiceFormShowing}
-	<SlidePanel on:closePanel={() => (isInvoiceFormShowing = false)}
-		><InvoiceForm
-			{invoice}
+{#if isClientFormShowing}
+	<SlidePanel on:closePanel={() => (isClientFormShowing = false)}
+		><ClientForm
+			{client}
 			formState={'edit'}
 			closePanel={() => {
-				isInvoiceFormShowing = false;
+				isClientFormShowing = false;
 			}}
 		/></SlidePanel
 	>
-{/if} -->
+{/if}
 
 <style lang="postcss">
 	.client-row {
