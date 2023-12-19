@@ -2,13 +2,15 @@
 	import Button from '$lib/components/Button.svelte';
 	import Check from '$lib/components/icon/Check.svelte';
 	import Trash from '$lib/components/icon/Trash.svelte';
+	import { addClient } from '$lib/stores/ClientStore';
 	import { states } from '$lib/utils/states';
 
 	export let client: Client = {} as Client;
 	export let closePanel: () => void = () => {};
 
 	const handleSubmit = () => {
-		console.log({ client });
+		addClient(client);
+		closePanel();
 	};
 </script>
 
