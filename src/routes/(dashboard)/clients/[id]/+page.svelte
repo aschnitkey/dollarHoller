@@ -7,8 +7,9 @@
 	import {
 		totalAmount,
 		numToCurrency,
-		dollarsToCents,
-		centsToDollars
+		centsToDollars,
+		twoDecimals,
+		currencyToNum
 	} from '$lib/utils/moneyHelpers';
 	import BlankState from '$lib/components/BlankState.svelte';
 	import InvoiceRowHeader from '../../invoices/InvoiceRowHeader.svelte';
@@ -17,14 +18,46 @@
 	import ClientForm from '../ClientForm.svelte';
 	import Edit from '$lib/components/icon/Edit.svelte';
 	import { clients } from '$lib/stores/ClientStore';
+	import { isLate } from '$lib/utils/dateHelpers';
+	import { get } from 'svelte/store';
 
 	let isClientFormShowing = false;
 	let isEditingCurrentClient = false;
-	export let data;
+	export let data: { client: Client };
 
 	let editClient = () => {
 		isEditingCurrentClient = true;
 		isClientFormShowing = true;
+	};
+
+	const getDraft = (): number => {
+		if (!data.client.invoices || data.client.invoices.length < 1) return 0;
+		const draftInvoices = data.client.invoices.filter(
+			(invoice) => invoice.invoiceStatus === 'draft'
+		);
+		return centsToDollars(totalAmount(draftInvoices));
+	};
+
+	const getPaid = (): number => {
+		if (!data.client.invoices || data.client.invoices.length < 1) return 0;
+		const paidInvoices = data.client.invoices.filter((invoice) => invoice.invoiceStatus === 'paid');
+		return centsToDollars(totalAmount(paidInvoices));
+	};
+
+	const getTotalOverdue = (): number => {
+		if (!data.client.invoices || data.client.invoices.length < 1) return 0;
+		const draftInvoices = data.client.invoices.filter(
+			(invoice) => invoice.invoiceStatus === 'sent' && isLate(invoice.dueDate)
+		);
+		return centsToDollars(totalAmount(draftInvoices));
+	};
+
+	const getTotalOutstanding = (): number => {
+		if (!data.client.invoices || data.client.invoices.length < 1) return 0;
+		const draftInvoices = data.client.invoices.filter(
+			(invoice) => invoice.invoiceStatus === 'sent' && !isLate(invoice.dueDate)
+		);
+		return centsToDollars(totalAmount(draftInvoices));
 	};
 
 	onMount(() => {
@@ -58,26 +91,46 @@
 </div>
 
 <div class="flex items-center justify-between w-full mb-7">
-	<h1 class="text-3xl font-bold font-sansSerif text-daisyBush">Compressed.fm</h1>
+	<h1 class="text-3xl font-bold font-sansSerif text-daisyBush">{data.client.name}</h1>
 	<Button isAnimated={false} style="textOnly" iconLeft={Edit} onClick={editClient} label="Edit" />
 </div>
 
 <div class="grid grid-cols-1 gap-4 px-10 mb-10 rounded-lg lg:grid-cols-4 bg-gallery py-7">
 	<div class="summary-block">
 		<div class="label">Total Overdue</div>
-		<div class="number"><sup>$</sup>300.00</div>
+		<div class="number">
+			<sup>$</sup>{getTotalOverdue().toLocaleString('en-US', {
+				minimumFractionDigits: 2,
+				maximumFractionDigits: 2
+			})}
+		</div>
 	</div>
 	<div class="summary-block">
 		<div class="label">Total Outstanding</div>
-		<div class="number"><sup>$</sup>300.00</div>
+		<div class="number">
+			<sup>$</sup>{getTotalOutstanding().toLocaleString('en-US', {
+				minimumFractionDigits: 2,
+				maximumFractionDigits: 2
+			})}
+		</div>
 	</div>
 	<div class="summary-block">
 		<div class="label">Total Draft</div>
-		<div class="number"><sup>$</sup>300.00</div>
+		<div class="number">
+			<sup>$</sup>{getDraft().toLocaleString('en-US', {
+				minimumFractionDigits: 2,
+				maximumFractionDigits: 2
+			})}
+		</div>
 	</div>
 	<div class="summary-block">
 		<div class="label">Total Paid</div>
-		<div class="number"><sup>$</sup>300.00</div>
+		<div class="number">
+			<sup>$</sup>{getPaid().toLocaleString('en-US', {
+				minimumFractionDigits: 2,
+				maximumFractionDigits: 2
+			})}
+		</div>
 	</div>
 </div>
 
