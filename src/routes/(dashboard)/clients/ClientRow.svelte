@@ -73,7 +73,7 @@
 		{numToCurrency(centsToDollars(balanceInvoices()))}
 	</div>
 	<div class="relative items-center justify-center hidden lg:flex">
-		<a href="#" class="view text-pastelPurple hover:text-daisyBush">
+		<a href="/clients/{client.id}" class="view text-pastelPurple hover:text-daisyBush">
 			<View />
 		</a>
 	</div>
