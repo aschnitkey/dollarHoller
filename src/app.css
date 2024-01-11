@@ -105,6 +105,13 @@
 	.button {
 		@apply relative flex items-center px-5 py-2 text-base font-black rounded-lg lg:px-10 lg:py-3 lg:text-xl whitespace-nowrap font-sansSerif;
 	}
+
+	.auth-heading {
+		@apply mb-4 text-[2.5rem] text-goldenFizz font-black;
+	}
+	.auth-submit {
+		@apply mt-6 min-h-[3.5rem] w-full rounded-lg bg-robinEggBlue text-daisyBush py-3 px-4 text-xl font-bold hover:-translate-y-1 hover:shadow-lg transition-all duration-200;
+	}
 }
 
 @layer utilities {
