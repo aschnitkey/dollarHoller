@@ -17,6 +17,7 @@
 	} from '$lib/utils/moneyHelpers';
 	import ConfirmDelete from './ConfirmDelete.svelte';
 	import { clickOutside } from '$lib/actions/ClickOutside';
+	import { swipe } from '$lib/actions/Swipe';
 
 	export let invoice: Invoice;
 	let isAddtionalOptionsShowing = false;
@@ -52,6 +53,7 @@
 <!-- invoice rows -->
 <div
 	class="items-center py-3 bg-white rounded-lg lg:py-6 invoice-table invoice-row shadow-tableRow"
+	use:swipe={{}}
 >
 	<div class="status">
 		<Tag className={'ml-auto lg:ml-0'} label={getInvoiceLabel(invoice)} />
