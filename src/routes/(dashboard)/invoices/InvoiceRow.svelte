@@ -16,6 +16,7 @@
 		sumLineItems
 	} from '$lib/utils/moneyHelpers';
 	import ConfirmDelete from './ConfirmDelete.svelte';
+	import { clickOutside } from '$lib/actions/ClickOutside';
 
 	export let invoice: Invoice;
 	let isAddtionalOptionsShowing = false;
@@ -70,7 +71,12 @@
 			<View />
 		</a>
 	</div>
-	<div class="relative hidden text-sm lg:text-lg morebutton lg:center lg:flex">
+	<div
+		class="relative hidden text-sm lg:text-lg morebutton lg:center lg:flex"
+		use:clickOutside={() => {
+			isAddtionalOptionsShowing = false;
+		}}
+	>
 		<button
 			on:click={() => {
 				isAddtionalOptionsShowing = !isAddtionalOptionsShowing;

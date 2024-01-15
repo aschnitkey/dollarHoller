@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { clickOutside } from '$lib/actions/ClickOutside';
 	import AdditionalOptions from '$lib/components/AdditionalOptions.svelte';
 	import Tag from '$lib/components/Tag.svelte';
 	import Dots from '$lib/components/icon/Dots.svelte';
@@ -77,7 +78,12 @@
 			<View />
 		</a>
 	</div>
-	<div class="relative items-center justify-center hidden lg:flex">
+	<div
+		class="relative items-center justify-center hidden lg:flex"
+		use:clickOutside={() => {
+			isAddtionalOptionsShowing = false;
+		}}
+	>
 		<button
 			on:click={() => {
 				isAddtionalOptionsShowing = !isAddtionalOptionsShowing;
