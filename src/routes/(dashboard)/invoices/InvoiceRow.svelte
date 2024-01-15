@@ -25,6 +25,7 @@
 	let isOptionsDisabled = false;
 	let isModalShowing = false;
 	let isInvoiceFormShowing = false;
+	let triggerReset = false;
 
 	const handleDelete = () => {
 		isModalShowing = true;
@@ -55,7 +56,10 @@
 	<!-- invoice rows -->
 	<div
 		class="relative items-center py-3 bg-white rounded-lg lg:py-6 invoice-table invoice-row shadow-tableRow z-row"
-		use:swipe={{}}
+		use:swipe={{ triggerReset }}
+		on:outOfView={() => {
+			triggerReset = false;
+		}}
 	>
 		<div class="status">
 			<Tag className={'ml-auto lg:ml-0'} label={getInvoiceLabel(invoice)} />
@@ -104,7 +108,12 @@
 
 	<!-- swipe to reveal -->
 	<div class="absolute inset-0 flex items-center justify-around w-full h-full z-rowActions">
-		<button class="action-button">
+		<button
+			class="action-button"
+			on:click={() => {
+				triggerReset = true;
+			}}
+		>
 			<Cancel width={32} height={32} />
 			Cancel
 		</button>
