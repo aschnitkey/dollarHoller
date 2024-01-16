@@ -23,18 +23,22 @@ export const swipe: Action<HTMLElement, SwipeProps> = (node: HTMLElement, params
 		node.style.transform = `translate3d(${$coords.x}px, 0, 0)`;
 	});
 
-	if (isMobileBreakpoint()) {
-		node.addEventListener('mousedown', handleMouseDown);
-	}
-
-	window.addEventListener('resize', () => {
+	function setupEventListeners() {
 		if (isMobileBreakpoint()) {
 			node.addEventListener('mousedown', handleMouseDown);
+			node.addEventListener('touchstart', handleTouchStart);
 		} else {
 			node.removeEventListener('mousedown', handleMouseDown);
+			node.removeEventListener('touchstart', handleTouchStart);
 		}
 
 		elementWidth = node.clientWidth;
+	}
+
+	setupEventListeners();
+
+	window.addEventListener('resize', () => {
+		setupEventListeners();
 	});
 
 	function isMobileBreakpoint() {
@@ -62,10 +66,29 @@ export const swipe: Action<HTMLElement, SwipeProps> = (node: HTMLElement, params
 		window.addEventListener('mouseup', handleMouseUp);
 	}
 
+	function handleTouchStart(event: TouchEvent) {
+		x = event.touches[0].clientX;
+		startingX = event.touches[0].clientX;
+		window.addEventListener('touchmove', handleTouchMove);
+		window.addEventListener('touchend', handleTouchEnd);
+	}
+
 	function handleMouseMove(event: MouseEvent) {
 		// Delta X is diff from clicked to where we are currently
 		const dx = event.clientX - x;
 		x = event.clientX;
+		coordinates.update(($coords) => {
+			return {
+				x: $coords.x + dx,
+				y: 0
+			};
+		});
+	}
+
+	function handleTouchMove(event: TouchEvent) {
+		// Delta X is diff from clicked to where we are currently
+		const dx = event.touches[0].clientX - x;
+		x = event.touches[0].clientX;
 		coordinates.update(($coords) => {
 			return {
 				x: $coords.x + dx,
@@ -101,6 +124,13 @@ export const swipe: Action<HTMLElement, SwipeProps> = (node: HTMLElement, params
 		window.removeEventListener('mouseup', handleMouseUp);
 	}
 
+	function handleTouchEnd(event: TouchEvent) {
+		const endingX: number = event.changedTouches[0].clientX;
+		moveCardOver(endingX);
+		window.removeEventListener('touchmove', handleTouchMove);
+		window.removeEventListener('touchend', handleTouchEnd);
+	}
+
 	return {
 		update(newParams: SwipeProps) {
 			if (newParams.triggerReset) {
@@ -109,6 +139,7 @@ export const swipe: Action<HTMLElement, SwipeProps> = (node: HTMLElement, params
 		},
 		destroy() {
 			node.removeEventListener('mousedown', handleMouseDown);
+			node.removeEventListener('touchstart', handleTouchStart);
 		}
 	};
 };
