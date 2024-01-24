@@ -1,10 +1,23 @@
 import { writable } from 'svelte/store';
-import data from '../../seed.json';
+import supabase from '$lib/utils/supabase';
 
 export const clients = writable<Client[]>([]);
 
-export const loadClients = () => {
-	clients.set(data.clients);
+export const loadClients = async () => {
+	const { data, error } = await supabase
+		.from('client')
+		.select('*, invoice(id, invoiceStatus, lineItems(*))');
+
+	if (error) {
+		console.error(error);
+		return;
+	}
+
+	if (data) {
+		clients.set(data as Client[]);
+	}
+
+	// clients.set(data.clients);
 };
 
 /**
@@ -24,6 +37,22 @@ export const updateClient = (clientToUpdate: Client) => {
 	return clientToUpdate;
 };
 
-export const getClientById = (id: string) => {
-	return data.clients.find((client) => client.id === id);
+export const getClientById = async (id: string) => {
+	let { data, error } = await supabase
+		.from('client')
+		.select('*, invoice(id, invoiceStatus, invoiceNumber, dueDate, client(id, name), lineItems(*))')
+		.eq('id', id);
+
+	if (error) {
+		console.error(error);
+		return;
+	}
+
+	if (data && data[0]) {
+		return data[0] as Client;
+	}
+
+	console.warn('cannot find a client');
+
+	// return data.clients.find((client) => client.id === id);
 };

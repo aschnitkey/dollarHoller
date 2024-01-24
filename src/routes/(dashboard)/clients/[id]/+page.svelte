@@ -24,6 +24,7 @@
 	let isClientFormShowing = false;
 	let isEditingCurrentClient = false;
 	export let data: { client: Client };
+	console.log(data);
 
 	let editClient = () => {
 		isEditingCurrentClient = true;
@@ -31,31 +32,33 @@
 	};
 
 	const getDraft = (): number => {
-		if (!data.client.invoices || data.client.invoices.length < 1) return 0;
-		const draftInvoices = data.client.invoices.filter(
-			(invoice) => invoice.invoiceStatus === 'draft'
+		if (!data.client.invoice || data.client.invoice.length < 1) return 0;
+		const draftInvoices = data.client.invoice.filter(
+			(currInvoice) => currInvoice.invoiceStatus === 'draft'
 		);
 		return centsToDollars(totalAmount(draftInvoices));
 	};
 
 	const getPaid = (): number => {
-		if (!data.client.invoices || data.client.invoices.length < 1) return 0;
-		const paidInvoices = data.client.invoices.filter((invoice) => invoice.invoiceStatus === 'paid');
+		if (!data.client.invoice || data.client.invoice.length < 1) return 0;
+		const paidInvoices = data.client.invoice.filter(
+			(currInvoice) => currInvoice.invoiceStatus === 'paid'
+		);
 		return centsToDollars(totalAmount(paidInvoices));
 	};
 
 	const getTotalOverdue = (): number => {
-		if (!data.client.invoices || data.client.invoices.length < 1) return 0;
-		const draftInvoices = data.client.invoices.filter(
-			(invoice) => invoice.invoiceStatus === 'sent' && isLate(invoice.dueDate)
+		if (!data.client.invoice || data.client.invoice.length < 1) return 0;
+		const draftInvoices = data.client.invoice.filter(
+			(currInvoice) => currInvoice.invoiceStatus === 'sent' && isLate(currInvoice.dueDate)
 		);
 		return centsToDollars(totalAmount(draftInvoices));
 	};
 
 	const getTotalOutstanding = (): number => {
-		if (!data.client.invoices || data.client.invoices.length < 1) return 0;
-		const draftInvoices = data.client.invoices.filter(
-			(invoice) => invoice.invoiceStatus === 'sent' && !isLate(invoice.dueDate)
+		if (!data.client.invoice || data.client.invoice.length < 1) return 0;
+		const draftInvoices = data.client.invoice.filter(
+			(currInvoice) => currInvoice.invoiceStatus === 'sent' && !isLate(currInvoice.dueDate)
 		);
 		return centsToDollars(totalAmount(draftInvoices));
 	};
@@ -73,7 +76,7 @@
 	class="flex flex-col-reverse items-start justify-between mb-7 lg:mb-16 lg:flex-row lg:items-center md:gap-y-4 gap-y-6"
 >
 	<!-- Search field -->
-	{#if data.client?.invoices && data.client.invoices.length > 0}
+	{#if data.client?.invoice && data.client.invoice.length > 0}
 		<Search />
 	{:else}
 		<div />
@@ -136,20 +139,20 @@
 
 <!-- list of clients -->
 <div>
-	{#if data.client.invoices === null}
+	{#if data.client.invoice === null || data.client.invoice === undefined}
 		Loading...
-	{:else if data.client.invoices.length <= 0}
+	{:else if data.client.invoice.length <= 0}
 		<BlankState />
 	{:else}
 		<InvoiceRowHeader className={'text-daisyBush'} />
 		<div class="flex flex-col-reverse">
-			{#each data.client.invoices as invoice}
+			{#each data.client.invoice as invoice}
 				<InvoiceRow {invoice} />
 			{/each}
 		</div>
 		<CircledAmount
 			label={'Total'}
-			amount={numToCurrency(centsToDollars(totalAmount(data.client.invoices)))}
+			amount={numToCurrency(centsToDollars(totalAmount(data.client.invoice)))}
 		/>
 	{/if}
 </div>

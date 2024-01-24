@@ -12,7 +12,6 @@ export const loadInvoices = async () => {
 		console.error(error);
 		return;
 	}
-	console.log(data);
 
 	invoices.set(data as Invoice[]);
 };

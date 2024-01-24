@@ -22,9 +22,11 @@
 	export let client: Client;
 
 	const receivedInvoices = () => {
-		if (client.invoices) {
+		if (client.invoice) {
 			// find invoices that have been paid
-			const paidInvoices = client.invoices.filter((invoice) => invoice.invoiceStatus === 'paid');
+			const paidInvoices = client.invoice.filter(
+				(currInvoice) => currInvoice.invoiceStatus === 'paid'
+			);
 
 			// get the sum of them
 			return totalAmount(paidInvoices);
@@ -33,9 +35,11 @@
 	};
 
 	const balanceInvoices = () => {
-		if (client.invoices) {
+		if (client.invoice) {
 			// find invoices that have not been paid
-			const paidInvoices = client.invoices.filter((invoice) => invoice.invoiceStatus !== 'paid');
+			const paidInvoices = client.invoice.filter(
+				(currInvoice) => currInvoice.invoiceStatus !== 'paid'
+			);
 
 			// get the sum of them
 			return totalAmount(paidInvoices);

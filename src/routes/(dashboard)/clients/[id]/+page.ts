@@ -1,7 +1,7 @@
 import { getClientById } from '$lib/stores/ClientStore.js';
 
-export function load({ params }) {
+export async function load({ params }) {
 	const id = params?.id;
-	const client = getClientById(id);
+	const client = await getClientById(id);
 	return { client };
 }
