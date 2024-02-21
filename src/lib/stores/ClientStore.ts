@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import supabase from '$lib/utils/supabase';
+import { displayErrorMessage } from '$lib/utils/handleError';
 import { snackbar } from './SnackbarStore';
 
 export const clients = writable<Client[]>([]);
@@ -33,14 +34,14 @@ export const addClient = async (clientToAdd: Client) => {
 		.select();
 
 	if (error) {
-		console.error(error);
-		snackbar.send({ message: error.message, type: 'error' });
+		displayErrorMessage(error as Error);
 		return;
 	}
 
 	const id = data[0].id;
 
 	clients.update((prev: Client[]) => [...prev, { ...clientToAdd, clientStatus: 'active', id }]);
+	snackbar.send({ message: 'Client Successfully Added', type: 'success' });
 	return clientToAdd;
 };
 

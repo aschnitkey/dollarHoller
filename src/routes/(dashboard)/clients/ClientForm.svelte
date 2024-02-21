@@ -10,10 +10,9 @@
 	export let formState: 'create' | 'edit' = 'create';
 	export let closePanel: () => void = () => {};
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		if (formState === 'create') {
-			addClient(client);
-			snackbar.send({ message: 'Client Successfully Added', type: 'success' });
+			await addClient(client);
 		} else {
 			updateClient(client);
 			snackbar.send({ message: 'Client Successfully Modified', type: 'success' });

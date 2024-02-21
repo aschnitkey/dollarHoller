@@ -50,17 +50,16 @@
 		invoice.discount = event.detail.discount;
 	};
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		if (isNewClient) {
 			invoice.client = newClient as Client;
-			addClient(newClient as Client);
+			await addClient(newClient as Client);
 		}
 
 		if (formState === 'create') {
-			addInvoice(invoice);
-			snackbar.send({ message: 'Your invoice was successfully created.', type: 'success' });
+			await addInvoice(invoice);
 		} else {
-			updateInvoice(invoice);
+			await updateInvoice(invoice);
 			snackbar.send({ message: 'Your invoice was successfully updated.', type: 'success' });
 		}
 
