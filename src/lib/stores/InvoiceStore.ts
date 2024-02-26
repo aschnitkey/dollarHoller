@@ -43,7 +43,21 @@ export const addInvoice = async (invoiceToAdd: Invoice) => {
 	// get invoice ID
 	const invoiceId = invoiceResults.data[0].id;
 
-	// loop over all the line items and add the invoice ID
+	const isSuccessful = await addLineItems(lineItems, invoiceId);
+	if (!isSuccessful) return;
+
+	//update the store
+	invoices.update((prev: Invoice[]) => [...prev, { ...invoiceToAdd, id: invoiceId }]);
+	snackbar.send({ message: 'Your invoice was successfully created.', type: 'success' });
+	return invoiceToAdd;
+};
+
+const addLineItems = async (
+	lineItems: LineItems[] | undefined,
+	invoiceId: string
+): Promise<boolean> => {
+	let isSuccessful = true;
+
 	if (lineItems && lineItems.length > 0) {
 		const newLineItems = lineItems.map((lineItem: LineItems) => ({ ...lineItem, invoiceId }));
 
@@ -53,17 +67,41 @@ export const addInvoice = async (invoiceToAdd: Invoice) => {
 
 		if (lineItemResults.error) {
 			displayErrorMessage(lineItemResults.error as Error);
-			return;
+			isSuccessful = false;
 		}
 	}
-
-	//update the store
-	invoices.update((prev: Invoice[]) => [...prev, { ...invoiceToAdd, id: invoiceId }]);
-	snackbar.send({ message: 'Your invoice was successfully created.', type: 'success' });
-	return invoiceToAdd;
+	return isSuccessful;
 };
 
-export const updateInvoice = (invoiceToUpdate: Invoice) => {
+const deleteLineItems = async (invoiceId: string): Promise<boolean> => {
+	let isSuccessful = true;
+
+	const { error } = await supabase.from('lineItems').delete().eq('invoiceId', invoiceId);
+
+	if (error) {
+		displayErrorMessage(error as Error);
+		isSuccessful = false;
+	}
+
+	return isSuccessful;
+};
+
+export const updateInvoice = async (invoiceToUpdate: Invoice) => {
+	const { lineItems, client, ...updatedInvoice } = invoiceToUpdate;
+	// update the client
+	// TODO: update the client
+
+	// delete all the line items
+	let isSuccessful = await deleteLineItems(invoiceToUpdate.id);
+	if (!isSuccessful) return;
+
+	// add new line items
+	isSuccessful = await addLineItems(lineItems, updatedInvoice.id);
+	if (!isSuccessful) return;
+
+	// update the invoice within supabase
+
+	// update the store
 	invoices.update((prev: Invoice[]) =>
 		prev.map((curr: Invoice) => (curr.id === invoiceToUpdate.id ? invoiceToUpdate : curr))
 	);
