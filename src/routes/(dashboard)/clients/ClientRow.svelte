@@ -14,6 +14,7 @@
 	import SlidePanel from '$lib/components/SlidePanel.svelte';
 	import { swipe } from '$lib/actions/Swipe';
 	import Send from '$lib/components/icon/Send.svelte';
+	import { deleteClient } from '$lib/stores/ClientStore';
 
 	let isAddtionalOptionsShowing: boolean = false;
 	let isClientFormShowing: boolean = false;
@@ -63,7 +64,7 @@
 	};
 
 	const handleDelete = () => {
-		console.log('deleting');
+		deleteClient(client.id);
 	};
 
 	const handleSendInvoice = () => {

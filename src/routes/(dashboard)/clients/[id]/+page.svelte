@@ -69,7 +69,7 @@
 </script>
 
 <svelte:head>
-	<title>Invoices | The Dollar Holler</title>
+	<title>{data.client.name} | The Dollar Holler</title>
 </svelte:head>
 
 <div
@@ -82,7 +82,7 @@
 		<div />
 	{/if}
 
-	<!-- New Invoice Button -->
+	<!-- New Client Button -->
 	<div>
 		<Button
 			label={'+ Client'}
@@ -137,7 +137,7 @@
 	</div>
 </div>
 
-<!-- list of clients -->
+<!-- list of invoices -->
 <div>
 	{#if data.client.invoice === null || data.client.invoice === undefined}
 		Loading...

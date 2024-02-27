@@ -2,6 +2,7 @@ import { writable } from 'svelte/store';
 import supabase from '$lib/utils/supabase';
 import { displayErrorMessage } from '$lib/utils/handleError';
 import { snackbar } from './SnackbarStore';
+import { deleteInvoice } from './InvoiceStore';
 
 export const clients = writable<Client[]>([]);
 
@@ -83,4 +84,28 @@ export const getClientById = async (id: string) => {
 	console.warn('cannot find a client');
 
 	// return data.clients.find((client) => client.id === id);
+};
+
+export const deleteClient = async (clientId: string) => {
+	const clientInvoices = await supabase.from('invoice').select('*').eq('clientId', clientId);
+
+	if (clientInvoices.error) {
+		displayErrorMessage(clientInvoices.error as Error);
+		return;
+	}
+
+	clientInvoices.data?.forEach((invoice) => {
+		deleteInvoice(invoice);
+	});
+
+	const { error } = await supabase.from('client').delete().eq('id', clientId);
+
+	if (error) {
+		displayErrorMessage(error as Error);
+		return;
+	}
+
+	clients.update((prev: Client[]) => prev.filter((cur) => cur.id != clientId));
+
+	snackbar.send({ message: 'Client successfully Deleted', type: 'success' });
 };

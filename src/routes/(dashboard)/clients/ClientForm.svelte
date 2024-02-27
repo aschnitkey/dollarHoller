@@ -2,9 +2,12 @@
 	import Button from '$lib/components/Button.svelte';
 	import Check from '$lib/components/icon/Check.svelte';
 	import Trash from '$lib/components/icon/Trash.svelte';
-	import { addClient, updateClient } from '$lib/stores/ClientStore';
+	import { addClient, deleteClient, updateClient } from '$lib/stores/ClientStore';
+	import { deleteInvoice } from '$lib/stores/InvoiceStore';
 	import { snackbar } from '$lib/stores/SnackbarStore';
+	import { displayErrorMessage } from '$lib/utils/handleError';
 	import { states } from '$lib/utils/states';
+	import supabase from '$lib/utils/supabase';
 
 	export let client: Client = {} as Client;
 	export let formState: 'create' | 'edit' = 'create';
@@ -64,7 +67,9 @@
 	<div class="col-span-3 field">
 		<Button
 			label="Delete"
-			onClick={() => {}}
+			onClick={() => {
+				deleteClient(client.id);
+			}}
 			isAnimated={false}
 			style="textOnlyDestructive"
 			iconLeft={Trash}
