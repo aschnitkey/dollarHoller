@@ -30,9 +30,9 @@
 			/>
 			<Button
 				label={'Yes, Delete It'}
-				onClick={() => {
+				onClick={async () => {
 					dispatch('close');
-					deleteInvoice(invoice);
+					await deleteInvoice(invoice);
 					snackbar.send({ message: 'Your invoice was successfully deleted.', type: 'success' });
 				}}
 				isAnimated={false}

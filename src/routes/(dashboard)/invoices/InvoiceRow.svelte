@@ -30,7 +30,6 @@
 	const handleDelete = () => {
 		isModalShowing = true;
 		isAddtionalOptionsShowing = false;
-		console.log('deleting');
 	};
 
 	const handleEdit = () => {
