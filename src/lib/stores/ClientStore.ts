@@ -42,7 +42,7 @@ export const addClient = async (clientToAdd: Client) => {
 
 	clients.update((prev: Client[]) => [...prev, { ...clientToAdd, clientStatus: 'active', id }]);
 	snackbar.send({ message: 'Client Successfully Added', type: 'success' });
-	return clientToAdd;
+	return { ...clientToAdd, id };
 };
 
 export const updateClient = async (clientToUpdate: Client) => {

@@ -88,8 +88,6 @@ const deleteLineItems = async (invoiceId: string): Promise<boolean> => {
 
 export const updateInvoice = async (invoiceToUpdate: Invoice) => {
 	const { lineItems, client, ...updatedInvoice } = invoiceToUpdate;
-	// update the client
-	// TODO: update the client
 
 	// delete all the line items
 	let isSuccessful = await deleteLineItems(invoiceToUpdate.id);
@@ -101,10 +99,25 @@ export const updateInvoice = async (invoiceToUpdate: Invoice) => {
 
 	// update the invoice within supabase
 
+	const { data, error } = await supabase
+		.from('invoice')
+		.update({ ...updateInvoice, clientId: client.id })
+		.eq('id', updatedInvoice.id)
+		.select();
+
+	if (error) {
+		displayErrorMessage(error as Error);
+		return;
+	}
+
 	// update the store
 	invoices.update((prev: Invoice[]) =>
 		prev.map((curr: Invoice) => (curr.id === invoiceToUpdate.id ? invoiceToUpdate : curr))
 	);
+
+	// display a success message
+	snackbar.send({ message: 'Successfully updated Invoice', type: 'success' });
+
 	return invoiceToUpdate;
 };
 
