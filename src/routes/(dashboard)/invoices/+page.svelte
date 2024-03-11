@@ -22,7 +22,7 @@
 	};
 
 	const SearchInvoices = (event: CustomEvent) => {
-		let searchTerms = event.detail.searchTerms;
+		const searchTerms = event.detail.searchTerms;
 		invoiceList = $invoices.filter((invoice) => {
 			return (
 				invoice?.client?.name?.toLowerCase().includes(searchTerms.toLowerCase()) ||
