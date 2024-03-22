@@ -6,7 +6,7 @@ export const actions = {
 		const formData = await request.formData();
 		const email = formData.get('email');
 
-		const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+		const { data, error } = await supabase.auth.resetPasswordForEmail(email as string, {
 			redirectTo: `${PUBLIC_BASE_URL}/reset-password`
 		});
 
